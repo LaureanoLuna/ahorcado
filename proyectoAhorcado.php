@@ -41,8 +41,18 @@ function codificacionPalabra ($coleccion, $palabra){
     return $codigo;
 }
 
+function codificacion ($codigo){
+    foreach ($codigo as $key => $value) {
+        $codificado[] = ($value + 7)%10;
+    }
+    return $codificado;
+}
+
 $juego = abcd();
 $inicio = inicioAhorcado();
 $inicioCodificacion = codificacionPalabra($juego,$inicio);
-print_r($inicioCodificacion);
+$codificacion = codificacion($inicioCodificacion);
+
+echo "El codigo de la palabra a jugar es: \n". implode(" - ",$codificacion);
+//print_r($codificacion);
 
