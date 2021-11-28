@@ -29,13 +29,11 @@ function inicioAhorcado (){
  * @param array $palabra
  * @return array
  */
-function codificacionPalabra ($coleccion , $palabra){
-    // int $cant, $i
-    // array $codigo
-    $cant = count($coleccion);
-    for ($i=0; $i < $cant; $i++) { 
-        foreach ($palabra as $key => $value) {
-            if ($coleccion[$i]==$value){
+function codificacionPalabra ($coleccion, $palabra){
+    foreach ($palabra as $key => $value) {
+        $cant= count($coleccion);
+        for ($i=0; $i < $cant ; $i++) { 
+            if ( $value == $coleccion[$i]){
                 $codigo[] = $i;
             }
         }
@@ -47,3 +45,4 @@ $juego = abcd();
 $inicio = inicioAhorcado();
 $inicioCodificacion = codificacionPalabra($juego,$inicio);
 print_r($inicioCodificacion);
+
