@@ -40,19 +40,52 @@ function codificacionPalabra ($coleccion, $palabra){
     }
     return $codigo;
 }
-
+/**
+ * codifica los elementos deñ arreglo generando un numero diferente al actual, retornando un array.
+ * @param array $codigo
+ * @return array
+ */
 function codificacion ($codigo){
+    //int $value, $key
     foreach ($codigo as $key => $value) {
         $codificado[] = ($value + 7)%10;
     }
     return $codificado;
 }
 
+/**
+ * muestra por pantalla el codigo para comenzar el juego del ahorcado
+ * @param array $coleccion
+ * no posee retorno
+ */
+function codigoParaJugar ($coleccion){
+
+    echo "El codigo de la palabra a jugar es: \n". implode(" - ",$coleccion);
+}
+
+
+function inicioSegundaEtapa (){
+    echo "Ingrese el codigo: ";
+    $numCodigo = trim(fgets(STDIN));
+
+    return $numCodigo;
+}
+
+function acomodoNum ($numCodificado){
+    $num = str_split($numCodificado);
+    return $num;
+}
+function decodificacionNum ($coleccion){
+    foreach ($coleccion as $key => $value) {
+        $decodificado[]=$value +
+    }
+}
+
+
 $juego = abcd();
 $inicio = inicioAhorcado();
 $inicioCodificacion = codificacionPalabra($juego,$inicio);
 $codificacion = codificacion($inicioCodificacion);
-
-echo "El codigo de la palabra a jugar es: \n". implode(" - ",$codificacion);
-
-
+codigoParaJugar ($codificacion); 
+$a = inicioSegundaEtapa();
+$b = acomodoNum($a);
