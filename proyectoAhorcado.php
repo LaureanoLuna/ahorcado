@@ -1,16 +1,5 @@
 <?php
 
-/**echo "Ingrese la letra a buscar ";
-$letra = trim(fgets(STDIN));
-$cole  = abcd();
-$cant = count($cole);
-for ($i=0; $i < $cant ; $i++) {
-    if ($letra == $cole[$i])
-    echo $i."\n".$letra;
-}
-//echo $coleccion[0];
- */
-
  /**
   * obtenemos un array con el abecedario para iniciar el juego 
   * @return array
@@ -22,22 +11,9 @@ function abcd (){
    
     return $coleccion;
 }
-$chichi = abcd();
-echo "Ingrese la palabra ";
-$cola = trim(fgets(STDIN));
-$arrayCola = str_split($cola);
-$cant = count ($chichi);
-for ($i=0; $i < $cant ; $i++) { 
-    foreach ($arrayCola as $key => $value) {
-        if($value == $chichi[$i]){
-            echo "son lo mismo \n ".$i;
-            $cosa[]=$value;
-        }
-    }
-}
-print_r($cosa);
-//print_r($arrayCola);
+
 /** Imprime por pantalla la solisitud al usuario la palabra 
+ * retorna un arreglo conformado por las letras de de la palabra ingresada por el usuario
  * @return array
  */
 function inicioAhorcado (){
@@ -46,3 +22,28 @@ function inicioAhorcado (){
     $palabra = trim(fgets(STDIN));
     return (str_split($palabra));
 }
+/**
+ * toma la ubicacion con respecto al abecedario de las letras que forman la palabra ingresada por el usuario y retorna un arreglo con esas ubicaciones
+ * 
+ * @param array $coleccion
+ * @param array $palabra
+ * @return array
+ */
+function codificacionPalabra ($coleccion , $palabra){
+    // int $cant, $i
+    // array $codigo
+    $cant = count($coleccion);
+    for ($i=0; $i < $cant; $i++) { 
+        foreach ($palabra as $key => $value) {
+            if ($coleccion[$i]==$value){
+                $codigo[] = $i;
+            }
+        }
+    }
+    return $codigo;
+}
+
+$juego = abcd();
+$inicio = inicioAhorcado();
+$inicioCodificacion = codificacionPalabra($juego,$inicio);
+print_r($inicioCodificacion);
