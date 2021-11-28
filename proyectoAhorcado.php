@@ -19,7 +19,7 @@ function abcd (){
 function inicioAhorcado (){
     //array $palabra
     echo "Ingrese la palabra a adivinar ";
-    $palabra = trim(fgets(STDIN));
+    $palabra = strtolower(trim(fgets(STDIN)));
     return (str_split($palabra));
 }
 /**
@@ -54,5 +54,5 @@ $inicioCodificacion = codificacionPalabra($juego,$inicio);
 $codificacion = codificacion($inicioCodificacion);
 
 echo "El codigo de la palabra a jugar es: \n". implode(" - ",$codificacion);
-//print_r($codificacion);
+
 
