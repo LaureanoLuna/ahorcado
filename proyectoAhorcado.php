@@ -7,8 +7,9 @@
  */
 function abcd (){
     // array $coleccion
-    $coleccion = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"];
-   
+   $coleccion = [ "a","b","c","d","e","f","g","h","i","j",
+                 "k","l","m","n","ñ","o","p","q","r","s",
+                 "t","u","v","w","x","y","z"];
     return $coleccion;
 }
 
@@ -48,7 +49,7 @@ function codificacionPalabra ($coleccion, $palabra){
 function codificacion ($codigo){
     //int $value, $key
     foreach ($codigo as $key => $value) {
-        $codificado[] = ($value + 7)%10;
+        $codificado[] = ($value +10);
     }
     return $codificado;
 }
@@ -60,7 +61,7 @@ function codificacion ($codigo){
  */
 function codigoParaJugar ($coleccion){
 
-    echo "El codigo de la palabra a jugar es: \n". implode(" - ",$coleccion);
+    echo "El codigo de la palabra a jugar es: \n". implode(" - ",$coleccion)."\n";
 }
 
 
@@ -72,20 +73,40 @@ function inicioSegundaEtapa (){
 }
 
 function acomodoNum ($numCodificado){
-    $num = str_split($numCodificado);
+    $num = explode("-",$numCodificado);
     return $num;
 }
 function decodificacionNum ($coleccion){
     foreach ($coleccion as $key => $value) {
-        $decodificado[]=$value +
+        $decodificado[]=($value -10);
     }
+    return $decodificado;
 }
+
+function buscarLetras ($codigoNum , $coleccion){
+    $palabra=[];
+    foreach ($codigoNum as $key => $value) {
+        $palabra[]= $coleccion[$value];
+    }
+    
+    
+    return $palabra;
+}
+
+
 
 
 $juego = abcd();
 $inicio = inicioAhorcado();
 $inicioCodificacion = codificacionPalabra($juego,$inicio);
 $codificacion = codificacion($inicioCodificacion);
-codigoParaJugar ($codificacion); 
+codigoParaJugar ($codificacion)."\n"; 
 $a = inicioSegundaEtapa();
 $b = acomodoNum($a);
+$c = decodificacionNum($b);
+$d = buscarLetras($c,$juego);
+//print_r($b)."\n";
+//print_r($inicioCodificacion)."\n";
+print_r($c);
+
+echo implode(".",$d);
