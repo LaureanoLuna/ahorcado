@@ -9,3 +9,5 @@
 # 3º Etapa: consta de la programacion de los modulos para generar la parte interactiva con el usuario adivinador, el cual consta de impreciones en pantalla, comparaciones de letras y una vez realizada la palabra o la cantidad de oportunidades limites de conceguir esa palabra, mostrara el resultado por pantalla.
 
 # 4º Etapa: Sera la realizacion de un menu para mayor atraccion e interactividad con el/los usuarios.
+
+#Creado y  pensado por Luna Laureano
