@@ -63,50 +63,161 @@ function codigoParaJugar ($coleccion){
 
     echo "El codigo de la palabra a jugar es: \n". implode(" - ",$coleccion)."\n";
 }
+// Finaliza la 1º Etapa.
 
+// 2º Etapa
 
+/**
+ * Solicita al usuario que ingrese el codigo numerico.
+ * Lo retona en forma de array por la funcion "explode" que extrae los numeros para formar dicha array.
+ * Es una funcion sin parametros
+ * @return array
+ */
 function inicioSegundaEtapa (){
+    //array $num
     echo "Ingrese el codigo: ";
-    $numCodigo = trim(fgets(STDIN));
-
-    return $numCodigo;
+    $num = explode("-",trim(fgets(STDIN)));
+     return $num;
 }
 
-function acomodoNum ($numCodificado){
-    $num = explode("-",$numCodificado);
-    return $num;
-}
+/**
+ * Toma el array con sus elementos codificados y retorna un array con sus elementos decodificados (en estados puro).
+ * 
+ * @param array $coleccion
+ * @return array
+ */
 function decodificacionNum ($coleccion){
+    // array $decodificado
     foreach ($coleccion as $key => $value) {
         $decodificado[]=($value -10);
     }
     return $decodificado;
 }
 
+/**
+ * Compara los elemente del arreglo ingresado por el usuario, equivalentea a la ubicacion de letras alfabeticas
+ * para obtener dicha palabra formada por ese codigo.
+ * 
+ * @param array $codigoNum
+ * @param array $coleccion
+ * @return array
+ */
 function buscarLetras ($codigoNum , $coleccion){
+    // array $palabra
     $palabra=[];
     foreach ($codigoNum as $key => $value) {
         $palabra[]= $coleccion[$value];
     }
-    
-    
     return $palabra;
+}
+// Finaliza la 2º Etapa
+
+function dibujoAhorcado (){
+    echo "       ----- \n";
+    echo "       |     \n";
+    echo "       |     \n";
+    echo "    ___|____ \n";
+    echo "   |________|\n";
+    
+}
+
+function letra (){
+    echo "Ingrese la una letra ";
+    $letra = trim(fgets(STDIN));
+    return $letra;
+}
+
+function comparacionDeLetra ($letra, $arregloPalabra){
+    foreach ($arregloPalabra as $key => $value) {
+        if ($value == $letra){
+            $palabraAdivinada[$key]=$letra;
+        }else {
+            $palabraAdivinada = false;
+        }
+    }
+    return $palabraAdivinada;
+}
+function letraErronea ($letra, $i){
+        if ($letra == false && $i == 0){
+        
+         echo "       ----- \n";
+         echo "       |   ☺ \n";
+         echo "       |     \n";
+         echo "    ___|____ \n";
+         echo "   |________|\n";
+    }elseif ($letra == false && $i == 1){
+        
+         echo "       ----- \n";
+         echo "       |   ☺ \n";
+         echo "       |   | \n";
+         echo "    ___|____ \n";
+         echo "   |________|\n";
+        
+    }elseif ($letra == false && $i == 2){
+        
+         echo "       ----- \n";
+         echo "       |   ☺ \n";
+         echo "       |  /| \n";
+         echo "    ___|____ \n";
+         echo "   |________|\n";
+    }elseif ($letra == false && $i == 3){
+        
+         echo "       -----  \n";
+         echo "       |   ☺  \n";
+         echo "       |  /|\ \n";
+         echo "    ___|____  \n";
+         echo "   |________| \n";
+    }elseif ($letra == false && $i == 4){
+        
+        echo "       -----  \n";
+        echo "       |   ☺  \n";
+        echo "       |  /|\ \n";
+        echo "       |  /   \n";
+        echo "    ___|____  \n";
+        echo "   |________| \n";
+        
+    }elseif ($letra == false && $i == 5){
+        
+        echo "       -----    \n";
+        echo "       |   ☺    \n";
+        echo "       |  /|\   \n";
+        echo "       |  / \   \n";
+        echo "    ___|____    \n";
+        echo "   |________|   \n";
+        
+    }elseif ($letra == false && $i == 6){
+        
+        echo "       -----    \n";
+        echo "       |   ☺    \n";
+        echo "       |  /|\   \n";
+        echo "       |  / \   \n";
+        echo "    ___|____    \n";
+        echo "   |________|   \n";
+        
+        echo "************* ";
+        echo "  AHORCADO    ";
+        echo "************* ";
+    }
 }
 
 
-
-
 $juego = abcd();
+dibujoAhorcado();
 $inicio = inicioAhorcado();
 $inicioCodificacion = codificacionPalabra($juego,$inicio);
 $codificacion = codificacion($inicioCodificacion);
 codigoParaJugar ($codificacion)."\n"; 
 $a = inicioSegundaEtapa();
-$b = acomodoNum($a);
-$c = decodificacionNum($b);
+//$b = acomodoNum($a);
+$c = decodificacionNum($a);
 $d = buscarLetras($c,$juego);
-//print_r($b)."\n";
-//print_r($inicioCodificacion)."\n";
-print_r($c);
-
-echo implode(".",$d);
+$i = 0;
+$palabraAdivinada = false;
+while ($palabraAdivinada == false && $i < 7) {
+    
+$letra = letra();
+$palabraAdivinada = comparacionDeLetra($letra,$d);
+letraErronea($palabraAdivinada, $i);
+$i++;
+}
+echo implode($d);
