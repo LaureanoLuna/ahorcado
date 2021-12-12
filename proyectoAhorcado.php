@@ -128,14 +128,15 @@ function letra (){
 }
 
 function comparacionDeLetra ($letra, $arregloPalabra){
-    foreach ($arregloPalabra as $key => $value) {
-        if ($value == $letra){
-            $palabraAdivinada[$key]=$letra;
-        }else {
-            $palabraAdivinada = false;
+    $cant = count($arregloPalabra);
+    $eleccion = "";
+    for ($i=0; $i < $cant ; $i++) { 
+        if($letra == $arregloPalabra[$i]){
+            $eleccion = $letra;
         }
+        
     }
-    return $palabraAdivinada;
+    return $eleccion;
 }
 function letraErronea ($letra, $i){
         if ($letra == false && $i == 0){
@@ -201,23 +202,50 @@ function letraErronea ($letra, $i){
 }
 
 
-$juego = abcd();
-dibujoAhorcado();
-$inicio = inicioAhorcado();
-$inicioCodificacion = codificacionPalabra($juego,$inicio);
-$codificacion = codificacion($inicioCodificacion);
-codigoParaJugar ($codificacion)."\n"; 
-$a = inicioSegundaEtapa();
-//$b = acomodoNum($a);
-$c = decodificacionNum($a);
-$d = buscarLetras($c,$juego);
-$i = 0;
-$palabraAdivinada = false;
-while ($palabraAdivinada == false && $i < 7) {
+
+
+
+
+
+ 
+
+
+
+
+
+
+echo "ingrese que jugar \n";
+echo "opcion 1: ingresar palabra \n";
+echo "opcion 2: adivinar palabra \n";
+$juego = trim(fgets(STDIN));
+
+
+switch ($juego) {
+    case 1:
+        $juego = abcd();
+        $inicio = inicioAhorcado();
+        $inicioCodificacion = codificacionPalabra($juego,$inicio);
+        $codificacion = codificacion($inicioCodificacion);
+        codigoParaJugar ($codificacion)."\n";
+    case 2:
+        dibujoAhorcado();
+        $juego = abcd();
+        $a = inicioSegundaEtapa();
+        $c = decodificacionNum($a);
+        $d = buscarLetras($c,$juego);
+        $i = 0;
+
+        while ($i < 7) {
+        $letra = letra();
+        $palabraAdivinada = comparacionDeLetra($letra,$d);
+        letraErronea($palabraAdivinada, $i);
+        $i++;
+        }
+        
+
     
-$letra = letra();
-$palabraAdivinada = comparacionDeLetra($letra,$d);
-letraErronea($palabraAdivinada, $i);
-$i++;
+    default:
+        # code...
+        break;
+        echo implode($d);
 }
-echo implode($d);
