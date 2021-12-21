@@ -138,15 +138,15 @@ function comparacionDeLetra ($letra, $arregloPalabra){
     }
     return $eleccion;
 }
-function letraErronea ($letra, $i){
-        if ($letra == false && $i == 0){
+function letraErronea ($i){
+        if ( $i == 0){
         
          echo "       ----- \n";
          echo "       |   ☺ \n";
          echo "       |     \n";
          echo "    ___|____ \n";
          echo "   |________|\n";
-    }elseif ($letra == false && $i == 1){
+    }elseif ($i == 1){
         
          echo "       ----- \n";
          echo "       |   ☺ \n";
@@ -154,21 +154,21 @@ function letraErronea ($letra, $i){
          echo "    ___|____ \n";
          echo "   |________|\n";
         
-    }elseif ($letra == false && $i == 2){
+    }elseif ($i == 2){
         
          echo "       ----- \n";
          echo "       |   ☺ \n";
          echo "       |  /| \n";
          echo "    ___|____ \n";
          echo "   |________|\n";
-    }elseif ($letra == false && $i == 3){
+    }elseif ($i == 3){
         
          echo "       -----  \n";
          echo "       |   ☺  \n";
          echo "       |  /|\ \n";
          echo "    ___|____  \n";
          echo "   |________| \n";
-    }elseif ($letra == false && $i == 4){
+    }elseif ($i == 4){
         
         echo "       -----  \n";
         echo "       |   ☺  \n";
@@ -177,7 +177,7 @@ function letraErronea ($letra, $i){
         echo "    ___|____  \n";
         echo "   |________| \n";
         
-    }elseif ($letra == false && $i == 5){
+    }elseif ($i == 5){
         
         echo "       -----    \n";
         echo "       |   ☺    \n";
@@ -186,7 +186,7 @@ function letraErronea ($letra, $i){
         echo "    ___|____    \n";
         echo "   |________|   \n";
         
-    }elseif ($letra == false && $i == 6){
+    }elseif ( $i == 6){
         
         echo "       -----    \n";
         echo "       |   ☺    \n";
@@ -234,12 +234,35 @@ switch ($juego) {
         $c = decodificacionNum($a);
         $d = buscarLetras($c,$juego);
         $i = 0;
-
-        while ($i < 7) {
         $letra = letra();
-        $palabraAdivinada = comparacionDeLetra($letra,$d);
-        letraErronea($palabraAdivinada, $i);
-        $i++;
+        $pal=[];
+
+
+        while ($pal !== $d && $i < 7) {
+            if(!in_array($letra,$d)){
+                letraErronea($i);
+                $i++;
+                
+                
+            }else{
+               foreach ($d as $key => $value) {
+                   if($value == $letra){
+                       $pal[$key]=$value;
+                       ksort($pal);
+                      
+                   }
+               }
+               
+            }
+           
+                      
+            $letra = letra();         
+            
+        
+        }
+       
+        if ( $pal == $d){
+            echo "ganaste";
         }
         
 
