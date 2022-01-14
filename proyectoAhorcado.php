@@ -227,6 +227,7 @@ switch ($juego) {
         $inicioCodificacion = codificacionPalabra($juego,$inicio);
         $codificacion = codificacion($inicioCodificacion);
         codigoParaJugar ($codificacion)."\n";
+        break;
     case 2:
         dibujoAhorcado();
         $juego = abcd();
@@ -272,3 +273,198 @@ switch ($juego) {
         break;
         echo implode($d);
 }
+
+
+
+function palabrasDelJuego(){
+    $arregloDePalabras= ["hola","pancho","papas","pucho","casa","dedo"];
+    return ($arregloDePalabras);
+}
+
+function letra (){
+    echo "Ingrese la una letra ";
+    $letra = trim(fgets(STDIN));
+    return $letra;
+}
+
+function palabraListaParaJugar ($clave,$arreglo){
+   
+    return (str_split($arreglo[$clave]));
+
+}
+
+function letraErronea ($i){
+    if( $i == 0 ){
+        echo "       ----- \n";
+        echo "       |     \n";
+        echo "       |     \n";
+        echo "    ___|____ \n";
+        echo "   |________|\n";
+    }elseif ( $i == 1){
+    
+        echo "       ----- \n";
+        echo "       |   ☺ \n";
+        echo "       |     \n";
+        echo "    ___|____ \n";
+        echo "   |________|\n";
+    }elseif ($i == 2){
+        
+        echo "       ----- \n";
+        echo "       |   ☺ \n";
+        echo "       |   | \n";
+        echo "    ___|____ \n";
+        echo "   |________|\n";
+        
+    }elseif ($i == 3){
+        
+        echo "       ----- \n";
+        echo "       |   ☺ \n";
+        echo "       |  /| \n";
+        echo "    ___|____ \n";
+        echo "   |________|\n";
+    }elseif ($i == 4){
+        
+        echo "       -----  \n";
+        echo "       |   ☺  \n";
+        echo "       |  /|\ \n";
+        echo "    ___|____  \n";
+        echo "   |________| \n";
+    }elseif ($i == 5){
+        
+        echo "       -----  \n";
+        echo "       |   ☺  \n";
+        echo "       |  /|\ \n";
+        echo "       |  /   \n";
+        echo "    ___|____  \n";
+        echo "   |________| \n";
+        
+    }elseif ($i == 6){
+        
+        echo "       -----    \n";
+        echo "       |   ☺    \n";
+        echo "       |  /|\   \n";
+        echo "       |  / \   \n";
+        echo "    ___|____    \n";
+        echo "   |________|   \n";
+        
+    }elseif ( $i == 7){
+        
+        echo "       -----    \n";
+        echo "       |   ☺    \n";
+        echo "       |  /|\   \n";
+        echo "       |  / \   \n";
+        echo "    ___|____    \n";
+        echo "   |________|   \n";
+        
+        echo "  ************* \n";
+        echo "    AHORCADO    \n";
+        echo "  ************* \n";
+    }
+}
+function dibujoAhorcado (){
+    echo "       ----- \n";
+    echo "       |     \n";
+    echo "       |     \n";
+    echo "    ___|____ \n";
+    echo "   |________|\n";
+    
+}
+
+function estaOnoLaLetra ($letraIngresada, $arreglo){
+
+    return (in_array($letraIngresada, $arreglo));
+}
+
+function formandoLaPalabra($letra, $palabraAadivinadar, $palabraAdivinada){
+
+    foreach ($palabraAadivinadar as $key => $value) {
+        if($value == $letra){
+            $palabraAdivinada[$key]=$letra;
+        }
+    }
+    return ($palabraAdivinada);
+}
+
+function esquemaPalabra ($arreglo){
+    $esquema = [];
+    $palabra = array_pad($esquema,count($arreglo)," ");
+    return ($palabra);
+}
+
+function visualDeLaPalabra ($arreglo){
+
+    echo implode(" - ",$arreglo)."\n";
+}
+
+do {
+    echo "1) Jugar \n";
+    echo "2) Instruciones \n";
+    echo "3) Salir \n";
+    $opcion = trim(fgets(STDIN));
+
+    switch ($opcion) {
+        case 1:
+            dibujoAhorcado();
+            $juego = palabrasDelJuego();
+            $palabraAlAzar = array_rand($juego,1);
+            $inicio = palabraListaParaJugar($palabraAlAzar,$juego);
+            $palabraAserAdivinada = esquemaPalabra($inicio);
+            $palabraAserAdivinada[0]=$inicio[0];
+            $i = 0;
+            
+           // echo " Empieza con la letra ".$inicio[0]."\n";
+           do {                     
+                $ingreseLetra = letra(); 
+                
+                 
+                           
+                if (estaOnoLaLetra($ingreseLetra,$inicio)){
+                    $palabraAserAdivinada = formandoLaPalabra($ingreseLetra,$inicio,$palabraAserAdivinada);                    
+                    ksort($palabraAserAdivinada);
+                    letraErronea($i);
+                    
+                }else{
+                    $i++;
+                    letraErronea($i);
+                    
+                }
+                visualDeLaPalabra($palabraAserAdivinada)."\n";
+                
+                do {
+                    echo "Ya sabe que palabra es?? \n";
+                    $decicion = trim(fgets((STDIN)));
+                    if ($decicion == "si"){
+                        echo "Ingrese la palabra \n";
+                        $palabraPensada = trim(fgets(STDIN));
+                        if ($palabraPensada == implode($inicio)){
+                            $palabraAserAdivinada = $inicio;
+                        }else{
+                            echo " Esa palabra no es \n";
+                            $i++;
+                            $decicion = "no";
+                        }
+                    }
+
+                } while ($decicion == "si" && $palabraAserAdivinada !== $inicio);
+               
+           } while ($palabraAserAdivinada !== $inicio && $i < 8);
+
+           if ($palabraAserAdivinada == $inicio){
+               echo "      GANASTE!!          \n";
+           }else{
+               echo "      PERDISTE \n";
+               echo " LA PALABRA ERA ".implode($inicio)."\n";
+           }           
+            break;
+        
+        case 2:
+            break;
+        case 3:
+            break;    
+
+        default:
+            echo "Ingrese un opcion correcta \n";
+
+    }
+
+} while ($opcion != 3);
