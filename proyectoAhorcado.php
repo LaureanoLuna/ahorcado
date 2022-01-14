@@ -410,7 +410,7 @@ function multiJugador (){
         
     } while ($opcion != 3);
 
-    return (implode($inicio));
+    return ($inicio);
 }
 
 
@@ -496,9 +496,9 @@ function multiJugador (){
                 break;
             
             case 2:
-                $juego = palabrasDelJuego();
-                $juego[count($juego)]= multiJugador();
-                print_r($juego);
+              
+                multiJugador();
+                
                 break;
             case 3:
                 instruccionesDelJuego();
