@@ -1,12 +1,12 @@
-
 create database Ahorcado;
 
 use Ahorcado;
 
 create table Jugador(
-id int not null,
+id int auto_increment,
 nombre varchar (10),
 primary key (id));
+
 
 create table Puntos(
 puntaje int,
@@ -19,7 +19,7 @@ foreign key (idDetalle) references DetallesJuego (id)
 on delete cascade on update cascade);
 
 create table DetallesJuego(
-id int,
+id int auto_increment,
 idJuego int,
 idJugador int,
 tiempoJuego time,
@@ -32,13 +32,13 @@ on delete cascade on update cascade);
 
 
 create table Juego(
-id int not null auto_increment,
-idPalabra int,
-primary key (id),
-foreign key (idPalabra)  references Palabra (id)
-on delete restrict on update restrict);
+id int auto_increment,
+primary key (id));
 
 create table Palabra(
-id int,
-palabra varchar (50) not null,
+id int auto_increment,
+palabra varchar (30),
 primary key (id));
+
+
+drop table Palabra;
