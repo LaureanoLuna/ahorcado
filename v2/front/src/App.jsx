@@ -24,7 +24,10 @@ function App() {
     <div
       style={{
         height: "100vh",
-        marginTop: "50%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "stretch",
       }}
     >
       <div
