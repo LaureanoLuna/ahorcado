@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Letra from "./assets/Components/Letra";
-import usePalabraRandom from "./assets/Hooks/usePalabraRamdon";
+import usePalabraRandom from "./assets/Hooks/usePalabraRandom";
 
 function App() {
   const { palabraJuego, getPalabraRandom, palabraAdivinar } =
