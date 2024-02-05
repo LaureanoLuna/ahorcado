@@ -21,33 +21,9 @@ function App() {
   }
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "stretch",
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "ui-monospace",
-          fontSize: "xx-large",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-        }}
-      >
-        {palabraJuego}
-      </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${palabraAdivinar.current.length}, 1fr)`,
-          gap: "10px",
-          margin: "2em",
-        }}
-      >
+    <div className="game-content">
+      <div className="representation-game">{palabraJuego}</div>
+      <div id="palabra-adivinar">
         {palabraAdivinar.current.map((letra, index) => (
           <Letra letra={letra} key={index} />
         ))}
@@ -62,7 +38,6 @@ function App() {
             backgroundColor: "white",
             border: "none",
             borderRadius: "5px",
-            fontFamily: "ui-monospace",
             fontSize: "xx-large",
             color: "black",
             textTransform: "uppercase",
