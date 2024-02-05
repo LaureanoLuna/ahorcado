@@ -1,27 +1,29 @@
 import { useState } from "react";
 import "./App.css";
 import Letra from "./assets/Components/Letra";
-import usePalabraRandom from "./assets/Hooks/usePalabraRandom";
+import useHandleLetra from "./assets/Hooks/useHandleJuego.mjs";
 
 function App() {
-  const { palabraJuego, getPalabraRandom, palabraAdivinar } =
-    usePalabraRandom();
   const [inputLetra, setInputLetra] = useState("");
+  const { handleLetra, errorCount, palabraAdivinar, resetWord, palabraJuego } =
+    useHandleLetra(inputLetra);
 
-  function handleLetra(e) {
-    setInputLetra(e.target.value);
-    Array.from(palabraJuego).map((letra, i) => {
-      if (letra.toLowerCase() === e.target.value.toLowerCase()) {
-        palabraAdivinar.current[i] = letra;
-      }
-    });
+  function setLetra(event) {
+    let letraIngresada = event.target.value;
+    setInputLetra(letraIngresada);
+    handleLetra(letraIngresada);
     setTimeout(() => {
       setInputLetra("");
-    }, 1000);
+    }, 300);
+  }
+
+  function handleChangePalabra() {
+    resetWord();
   }
 
   return (
     <div className="game-content">
+      <div className="content-errors">{errorCount}</div>
       <div className="representation-game">{palabraJuego}</div>
       <div id="palabra-adivinar">
         {palabraAdivinar.current.map((letra, index) => (
@@ -44,10 +46,11 @@ function App() {
           }}
           value={inputLetra}
           type="text"
-          onChange={handleLetra}
+          onChange={setLetra}
         />
       </div>
-      <button onClick={getPalabraRandom}>Change</button>
+
+      <button onClick={handleChangePalabra}>Change</button>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export async function fetchPalabraRandom() {
       throw new Error("Invalid data received from the server");
     }
 
-    return data[0];
+    return data[0].toLowerCase();
   } catch (error) {
     console.error("Error in fetchPalabraRandom:", error.message);
     throw error; // Re-throw the error for the caller to handle if needed
