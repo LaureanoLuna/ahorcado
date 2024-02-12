@@ -5,18 +5,79 @@
   text-align: center;
 }
 
-*{
+* {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.letter-content{
+.container {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+
+.container::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("./assets/Img/fondo.png");
+  background-position: left;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.2;
+  transform: rotateY(180deg);
+}
+
+.button-link-index {
+  position: relative;
+  min-width: 30%;
+  border: solid;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  list-style: none;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: large;
+}
+
+.button-link-index::before {
+  content: "";
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.button-link-index:hover::before {
+  background-image: url("./assets/Img/soga.png");
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.button-link-index:hover{
+  box-shadow: 5px 5px 1px gray;
+}
+
+.letter-content {
   min-height: 50px;
   border-bottom: 1px solid white;
   text-transform: uppercase;
   font-size: 2em;
 }
 
-.game-content{
+.game-content {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,21 +85,30 @@
   position: relative;
 }
 
-.representation-game{ 
-}
 
-#palabra-adivinar{
+#palabra-adivinar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%,50px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 50px), 1fr));
   gap: 10px;
 }
 
-.content-errors{
-  border:solid 1px white;
+.content-errors {
+  border: solid 1px white;
   border-radius: 5px;
   padding: 10px;
   text-align: end;
   position: absolute;
   top: 0px;
   right: 0px;
+}
+
+
+/* STYLES INDEX PAGE */
+.container-index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 300px;
+  width: 100%;
 }
