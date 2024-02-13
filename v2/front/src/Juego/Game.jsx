@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Letra from "../assets/Components/Letra";
 import useHandleLetra from "../assets/Hooks/useHandleJuego.mjs";
+//import "../assets/Function/teclaPress";
 
 export default function Game() {
   const [inputLetra, setInputLetra] = useState("");
+  const inputRef = useRef("");
   const { handleLetra, errorCount, palabraAdivinar, resetWord, palabraJuego } =
-    useHandleLetra(inputLetra);
+    useHandleLetra();
 
   function setLetra(event) {
     let letraIngresada = event.target.value;
@@ -20,6 +22,16 @@ export default function Game() {
     resetWord();
   }
 
+  useEffect(() => {
+    inputRef.current.focus();
+    const second = setInterval(() => {
+      inputRef.current.focus();
+    }, 1000);
+    return () => {
+      clearInterval(second);
+    };
+  }, []);
+
   return (
     <div className="game-content">
       <div className="content-errors">{errorCount}</div>
@@ -31,18 +43,8 @@ export default function Game() {
       </div>
       <div>
         <input
-          style={{
-            width: "100px",
-            height: "50px",
-            marginBottom: "20px",
-            textAlign: "center",
-            backgroundColor: "white",
-            border: "none",
-            borderRadius: "5px",
-            fontSize: "xx-large",
-            color: "black",
-            textTransform: "uppercase",
-          }}
+          id="input-letra"
+          ref={inputRef}
           value={inputLetra}
           type="text"
           onChange={setLetra}

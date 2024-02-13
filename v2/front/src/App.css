@@ -18,6 +18,17 @@
   position: relative;
 }
 
+/* INPUT PARA AGREGAR LETRAS */
+#input-letra{
+  text-align: center;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0.1;
+}
+
 
 .container::after {
   content: "";
@@ -112,6 +123,8 @@
   height: 300px;
   width: 100%;
 }
+
+
 
 /* IMG GAME */
 .container-img-select-game {

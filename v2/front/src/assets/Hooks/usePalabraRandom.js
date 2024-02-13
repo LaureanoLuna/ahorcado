@@ -28,7 +28,7 @@ function usePalabraRandom() {
       setPalabraJuego(palabra);
       initializePalabraAdivinar(palabra);
     } catch (error) {
-      console.error("Error fetching random palabra:", error);
+      console.error("Error al obtener la palabra:", error);
     }
   };
 

@@ -1,7 +1,8 @@
 import "./App.css";
+import Index from "./Juego";
 import Game from "./Juego/Game";
 import { Route, Routes } from "react-router-dom";
-import Index from "./Juego/Index";
+
 
 function App() {
   return (

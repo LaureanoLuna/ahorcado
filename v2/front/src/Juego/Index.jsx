@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import ImgLogosIndex from "../assets/Components/ImgLogosIndex";
 
 export default function Index() {
