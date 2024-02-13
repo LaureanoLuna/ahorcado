@@ -66,7 +66,7 @@
   background-repeat: no-repeat;
 }
 
-.button-link-index:hover{
+.button-link-index:hover {
   box-shadow: 5px 5px 1px gray;
 }
 
@@ -111,4 +111,27 @@
   justify-content: space-evenly;
   height: 300px;
   width: 100%;
+}
+
+/* IMG GAME */
+.container-img-select-game {
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.img-verdugo,
+.img-caliz,
+.img-pergamino,
+.img-about {
+  height: 200px;
+  position: absolute;
+  filter: drop-shadow(0px 0px 10px gray);
+  opacity: 0;
+}
+
+.img-visible {
+  opacity: 0.75;
+  transition: all 0.5s ease-in-out;
 }
