@@ -1,56 +1,61 @@
 import { useEffect, useRef, useState } from "react";
 import Letra from "../assets/Components/Letra";
-import useHandleLetra from "../assets/Hooks/useHandleJuego.mjs";
-//import "../assets/Function/teclaPress";
+import { useGameContext } from "../assets/Context/ContextGame";
+import GameOver from "../assets/Components/GameOver";
 
 export default function Game() {
-  const [inputLetra, setInputLetra] = useState("");
-  const inputRef = useRef("");
-  const { handleLetra, errorCount, palabraAdivinar, resetWord, palabraJuego } =
-    useHandleLetra();
+  const [inputLetter, setInputLetter] = useState("");
+  const inputRef = useRef(null);
+  const { handleLetter, errorCount, palabraToGuess, resetWord } =
+    useGameContext();
 
-  function setLetra(event) {
-    let letraIngresada = event.target.value;
-    setInputLetra(letraIngresada);
-    handleLetra(letraIngresada);
+  function setLetter(event) {
+    const enteredLetter = event.target.value;
+    setInputLetter(enteredLetter);
+    handleLetter(enteredLetter);
     setTimeout(() => {
-      setInputLetra("");
+      setInputLetter("");
     }, 300);
   }
 
-  function handleChangePalabra() {
+  function handleChangeWord() {
     resetWord();
   }
 
   useEffect(() => {
     inputRef.current.focus();
-    const second = setInterval(() => {
+    const interval = setInterval(() => {
       inputRef.current.focus();
     }, 1000);
     return () => {
-      clearInterval(second);
+      clearInterval(interval);
     };
   }, []);
 
+  console.log(palabraToGuess);
+
   return (
-    <div className="game-content">
-      <div className="content-errors">{errorCount}</div>
-      <div className="representation-game">{palabraJuego}</div>
-      <div id="palabra-adivinar">
-        {palabraAdivinar.current.map((letra, index) => (
-          <Letra letra={letra} key={index} />
-        ))}
+    <>
+      <GameOver />
+      <div className="game-content">
+        <div className="content-errors">{errorCount.current}</div>
+        <div className="representation-game"></div>
+        <div id="word-to-guess">
+          {palabraToGuess.current.map((letter, index) => (
+            <Letra letter={letter} key={index} />
+          ))}
+        </div>
+        <div>
+          <input
+            id="input-letter"
+            ref={inputRef}
+            value={inputLetter}
+            type="text"
+            onChange={setLetter}
+          />
+        </div>
+        <button onClick={handleChangeWord}>Reset</button>
       </div>
-      <div>
-        <input
-          id="input-letra"
-          ref={inputRef}
-          value={inputLetra}
-          type="text"
-          onChange={setLetra}
-        />
-      </div>
-      <button onClick={handleChangePalabra}>Change</button>
-    </div>
+    </>
   );
 }

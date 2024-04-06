@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import usePalabraRandom from "./usePalabraRandom";
-import { quitarAcento } from "../Function/quitarAcento";
 
 function useHandleLetra() {
   const { palabraJuego, palabraAdivinar, getPalabraRandom } =

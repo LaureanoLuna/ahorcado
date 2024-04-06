@@ -1,3 +1,3 @@
-export default function Letra({ letra }) {
-  return <div className="letter-content">{letra}</div>;
+export default function Letra({ letter }) {
+  return <div className="letter-content">{letter}</div>;
 }
