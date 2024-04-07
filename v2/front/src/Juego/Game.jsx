@@ -2,12 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import Letra from "../assets/Components/Letra";
 import { useGameContext } from "../assets/Context/ContextGame";
 import GameOver from "../assets/Components/GameOver";
+import HorcaGame from "../assets/Components/HorcaGame";
 
 export default function Game() {
   const [inputLetter, setInputLetter] = useState("");
   const inputRef = useRef(null);
-  const { handleLetter, errorCount, palabraToGuess, resetWord } =
-    useGameContext();
+  const {
+    handleLetter,
+    errorCount,
+    palabraToGuess,
+    resetWord,
+    gameOver,
+    gameWin,
+  } = useGameContext();
 
   function setLetter(event) {
     const enteredLetter = event.target.value;
@@ -32,14 +39,18 @@ export default function Game() {
     };
   }, []);
 
-  console.log(palabraToGuess);
-
   return (
     <>
-      <GameOver />
+      {gameOver && <GameOver />}
+      {gameWin && "hola"}
       <div className="game-content">
-        <div className="content-errors">{errorCount.current}</div>
-        <div className="representation-game"></div>
+        <div className="content-errors">
+          {errorCount}
+          <span>fallas</span>
+        </div>
+        <div className="representation-game">
+          <HorcaGame />
+        </div>
         <div id="word-to-guess">
           {palabraToGuess.current.map((letter, index) => (
             <Letra letter={letter} key={index} />

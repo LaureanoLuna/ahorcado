@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import imgGameOver from "../Img/gameOver.png";
-
+import { useNavigate } from "react-router-dom";
 
 export default function GameOver() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      navigate("/");
+    }, 5000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <div
       style={{
