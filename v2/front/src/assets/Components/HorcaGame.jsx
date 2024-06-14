@@ -4,7 +4,7 @@ import imgV from "../Img/HorcaViva.svg";
 import imgM from "../Img/HorcaMuerta.svg";
 
 export default function HorcaGame() {
-  const { errorCount } = useGameContext();
+  const { gameOver } = useGameContext();
 
   const estilosImg = {};
 
@@ -12,7 +12,7 @@ export default function HorcaGame() {
 
   return (
     <div>
-      {errorCount === 7 ? (
+      {gameOver ? (
         <img style={{ maxWidth: "300px" }} src={imgM} />
       ) : (
         <img style={{ maxWidth: "300px" }} src={imgV} />

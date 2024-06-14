@@ -46,7 +46,7 @@ export default function Game() {
       <div className="game-content">
         <div className="content-errors">
           {errorCount}
-          <span>fallas</span>
+          <span>Intentos</span>
         </div>
         <div className="representation-game">
           <HorcaGame />

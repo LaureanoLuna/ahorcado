@@ -17,7 +17,8 @@ export const useGameContext = () => useContext(GameContext);
 // Componente proveedor del contexto del juego
 export const GameProvider = ({ children }) => {
   // Obtener la palabra de juego y la palabra a adivinar del hook personalizado
-  const { palabraJuego, palabraAdivinar, getPalabraRandom } = usePalabraRandom();
+  const { palabraJuego, palabraAdivinar, getPalabraRandom } =
+    usePalabraRandom();
 
   // Referencia para almacenar los puntos, inicializados en función de la longitud de la palabra
   const puntos = useRef(palabraJuego.length * 10);
@@ -26,7 +27,7 @@ export const GameProvider = ({ children }) => {
   const { pathname } = useLocation();
 
   // Estado para el conteo de errores
-  const [errorCount, setErrorCount] = useState(0);
+  const [errorCount, setErrorCount] = useState(7);
 
   // Estado para determinar si el juego ha terminado
   const [isGameOver, setIsGameOver] = useState(false);
@@ -41,35 +42,38 @@ export const GameProvider = ({ children }) => {
     const lowercaseLetter = letter.toLowerCase();
 
     // Verificar si la letra está en la palabra de juego
-    if (palabraJuego.includes(lowercaseLetter)) {
-      // Actualizar la palabra a adivinar con las letras correctas
-      Array.from(palabraJuego).forEach((char, index) => {
-        if (char.toLowerCase() === lowercaseLetter) {
-          palabraAdivinar.current[index] = char;
-        }
-      });
-
-      // Verificar si la palabra ha sido completamente adivinada
-      if (!valueWord()) return;
-
-      // Actualizar puntos y marcar el juego como ganado
-      handlePuntos();
-      setIsWinGame(true);
-    } else {
+    if (!palabraJuego.includes(lowercaseLetter)) {
       // Incrementar el contador de errores si la letra no está en la palabra
       errorValue();
+      return;
     }
+    // Actualizar la palabra a adivinar con las letras correctas
+    Array.from(palabraJuego).forEach((char, index) => {
+      if (char.toLowerCase() === lowercaseLetter) {
+        palabraAdivinar.current[index] = char;
+      }
+    });
+
+    // Verificar si la palabra ha sido completamente adivinada
+    if (!valueWord()) return;
+
+    // Actualizar puntos y marcar el juego como ganado
+    handlePuntos();
+    setIsWinGame(true);
   };
 
   // Manejo de los valores de error
   const errorValue = () => {
-    // Si se alcanzan 7 errores, terminar el juego
-    if (errorCount === 7) {
-      puntos.current = 0;
-      setIsGameOver(true);
-      return;
-    }
-    setErrorCount((prevErrorCount) => prevErrorCount + 1);
+    setErrorCount((prevErrorCount) => {
+      const newErrorCount = prevErrorCount > 0 ? prevErrorCount - 1 : 0;
+
+      // Si se alcanzan 7 errores, terminar el juego
+      if (newErrorCount === 0) {
+        puntos.current = 0;
+        setIsGameOver(true);
+      }
+      return newErrorCount;
+    });
   };
 
   // Verificar si la palabra ha sido completamente adivinada
@@ -97,7 +101,7 @@ export const GameProvider = ({ children }) => {
   // Efecto para reiniciar el juego cuando la palabra de juego cambia
   useEffect(() => {
     if (isGameOver) {
-      setErrorCount(0);
+      setErrorCount(7);
       puntos.current = palabraJuego.length * 10;
       setIsGameOver(false);
       setIsWinGame(false);
