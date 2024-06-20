@@ -3,6 +3,7 @@ import Letra from "../assets/Components/Letra";
 import { useGameContext } from "../assets/Context/ContextGame";
 import GameOver from "../assets/Components/GameOver";
 import HorcaGame from "../assets/Components/HorcaGame";
+import GameWin from "../assets/Components/GameWin";
 
 export default function Game() {
   const [inputLetter, setInputLetter] = useState("");
@@ -42,7 +43,7 @@ export default function Game() {
   return (
     <>
       {gameOver && <GameOver />}
-      {gameWin && "hola"}
+      {gameWin && <GameWin />}
       <div className="game-content">
         <div className="content-errors">
           {errorCount}
@@ -58,6 +59,7 @@ export default function Game() {
         </div>
         <div>
           <input
+            autoComplete="false"
             id="input-letter"
             ref={inputRef}
             value={inputLetter}
