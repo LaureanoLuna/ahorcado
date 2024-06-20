@@ -3,7 +3,7 @@ import { fetchPalabraRandom } from "../Function/fetchPalabraRandom.mjs";
 import { useLocation } from "react-router-dom";
 
 /**
- * Hook personalizado para manejar la lógica de obtener una palabra aleatoria y 
+ * Hook personalizado para manejar la lógica de obtener una palabra aleatoria y
  * preparar los estados necesarios para el juego de adivinanza de palabras.
  */
 function usePalabraRandom() {
@@ -13,19 +13,25 @@ function usePalabraRandom() {
   // Estado para almacenar la palabra de juego
   const [palabraJuego, setPalabraJuego] = useState("");
 
+  //Estado para almacenar las palabras ya jugadas
+  const [palabrasJugadas, setPalabrasJugadas] = useState([]);
+
   // Referencia para almacenar la palabra a adivinar, inicializada como un array vacío
   const palabraAdivinar = useRef([]);
 
   /**
-   * Actualiza el almacenamiento local con la palabra dada.
+   * Actualiza el almacenamiento en la variable con la palabra dada.
    * @param {string} palabra - La palabra a almacenar.
    */
   const updateLocalStorage = (palabra) => {
-    localStorage.setItem("palabra", palabra);
+    setPalabrasJugadas((prevPalabrasJugadas) => [
+      ...prevPalabrasJugadas,
+      palabra,
+    ]);
   };
 
   /**
-   * Inicializa la palabra a adivinar como un array de la misma longitud que la palabra de juego, 
+   * Inicializa la palabra a adivinar como un array de la misma longitud que la palabra de juego,
    * con todos los valores establecidos en null.
    * @param {string} palabra - La palabra de juego.
    */
@@ -41,7 +47,7 @@ function usePalabraRandom() {
     try {
       const palabra = await fetchPalabraRandom();
 
-      if (!palabra || localStorage.getItem("palabra") === palabra) {
+      if (!palabra || palabrasJugadas.includes(palabra)) {
         getPalabraRandom(); // Reintentar si las condiciones no se cumplen
         return;
       }
@@ -70,5 +76,3 @@ function usePalabraRandom() {
 }
 
 export default usePalabraRandom;
-
-

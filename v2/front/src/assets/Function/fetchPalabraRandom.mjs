@@ -20,7 +20,6 @@ export async function fetchPalabraRandom() {
       throw new Error("Invalid data received from the server");
     }
 
-    console.log(data.palabra.toLowerCase());
     return data.palabra.toLowerCase();
   } catch (error) {
     console.error("Error in fetchPalabraRandom:", error.message);

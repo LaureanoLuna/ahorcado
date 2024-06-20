@@ -60,6 +60,7 @@ export const GameProvider = ({ children }) => {
     // Actualizar puntos y marcar el juego como ganado
     handlePuntos();
     setIsWinGame(true);
+    getPalabraRandom();
   };
 
   // Manejo de los valores de error
