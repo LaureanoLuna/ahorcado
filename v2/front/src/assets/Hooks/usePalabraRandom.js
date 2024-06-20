@@ -46,6 +46,7 @@ function usePalabraRandom() {
   const getPalabraRandom = async () => {
     try {
       const palabra = await fetchPalabraRandom();
+      console.log(palabra);
 
       if (!palabra || palabrasJugadas.includes(palabra)) {
         getPalabraRandom(); // Reintentar si las condiciones no se cumplen
