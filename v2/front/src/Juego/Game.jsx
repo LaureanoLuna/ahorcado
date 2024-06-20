@@ -4,10 +4,15 @@ import { useGameContext } from "../assets/Context/ContextGame";
 import GameOver from "../assets/Components/GameOver";
 import HorcaGame from "../assets/Components/HorcaGame";
 import GameWin from "../assets/Components/GameWin";
+import { Navigate, useNavigate } from "react-router-dom";
+import { fetchPalabraRandom } from "../assets/Function/fetchPalabraRandom.mjs";
 
 export default function Game() {
   const [inputLetter, setInputLetter] = useState("");
+  const [palabras, setPalabras] = useState([]);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+
   const {
     handleLetter,
     errorCount,
@@ -32,6 +37,7 @@ export default function Game() {
   }
 
   useEffect(() => {
+    setCountPalabrasJugadas(0);
     inputRef.current.focus();
     const interval = setInterval(() => {
       inputRef.current.focus();
@@ -85,6 +91,7 @@ export default function Game() {
           />
         </div>
         <button onClick={handleChangeWord}>Reset</button>
+        <button style={{ background: "red" }} onClick={() => navigate("/")}>Volver</button>
       </div>
     </>
   );
