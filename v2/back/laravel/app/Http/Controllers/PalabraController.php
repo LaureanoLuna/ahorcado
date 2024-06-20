@@ -9,6 +9,6 @@ class PalabraController extends Controller
 {
     public function index()
     {
-        return Palabra::all();
+        return Palabra::inRandomOrder()->first();
     }
 }
