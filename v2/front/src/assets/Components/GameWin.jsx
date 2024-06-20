@@ -4,8 +4,6 @@ import imgGameOver from "../Img/gameOver.png";
 
 
 export default function GameWin() {
-  const { gameWin } = useGameContext();
-  useEffect(() => {}, []);
 
   return (
     <div
@@ -22,7 +20,6 @@ export default function GameWin() {
         alignItems: "center",
       }}
     >
-      <img src={imgGameOver} className="game-over-image" />
     </div>
   );
 }

@@ -23,7 +23,7 @@ function usePalabraRandom() {
    * Actualiza el almacenamiento en la variable con la palabra dada.
    * @param {string} palabra - La palabra a almacenar.
    */
-  const updateLocalStorage = (palabra) => {
+  const updatePalabrasJugadas = (palabra) => {
     setPalabrasJugadas((prevPalabrasJugadas) => [
       ...prevPalabrasJugadas,
       palabra,
@@ -53,7 +53,7 @@ function usePalabraRandom() {
       }
 
       // Actualizar local storage, estado de la palabra de juego y palabra a adivinar
-      updateLocalStorage(palabra);
+      updatePalabrasJugadas(palabra);
       setPalabraJuego(palabra);
       initializePalabraAdivinar(palabra);
     } catch (error) {
@@ -72,7 +72,7 @@ function usePalabraRandom() {
   }, [pathname]);
 
   // Retornar los estados y funciones necesarios para el manejo de la palabra aleatoria
-  return { palabraJuego, palabraAdivinar, getPalabraRandom };
+  return { palabraJuego, palabraAdivinar, getPalabraRandom, palabrasJugadas };
 }
 
 export default usePalabraRandom;

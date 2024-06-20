@@ -103,12 +103,12 @@
   gap: 10px;
 }
 
-.content-errors {
+.content {
   border: solid 1px white;
   border-radius: 5px;
   padding: 10px 15px;
   text-align: end;
-  position: absolute;
+  /* position: absolute; */
   top: 0px;
   right: 0px;
   display: flex;
@@ -117,15 +117,16 @@
   align-items: center;
   font-size: x-large;
   font-weight: 600;
-  box-shadow: 0px 0px 50px red;
 }
 
-.content-errors span {
+.content span {
   font-size: small;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 100;
 }
+
+
 
 
 /* STYLES INDEX PAGE */

@@ -21,7 +21,7 @@ export const GameProvider = ({ children }) => {
     usePalabraRandom();
 
   // Referencia para almacenar los puntos, inicializados en función de la longitud de la palabra
-  const puntos = useRef(palabraJuego.length * 10);
+  const countPalabrasJugadas = useRef(0);
 
   // Obtener la ruta actual usando react-router
   const { pathname } = useLocation();
@@ -70,7 +70,6 @@ export const GameProvider = ({ children }) => {
 
       // Si se alcanzan 7 errores, terminar el juego
       if (newErrorCount === 0) {
-        puntos.current = 0;
         setIsGameOver(true);
       }
       return newErrorCount;
@@ -84,7 +83,7 @@ export const GameProvider = ({ children }) => {
 
   // Actualizar los puntos al adivinar correctamente
   const handlePuntos = () => {
-    puntos.current -= errorCount;
+    countPalabrasJugadas.current += 1;
   };
 
   // Manejo de la ruta (funcionalidad pendiente de implementación)
@@ -103,7 +102,7 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     if (isGameOver) {
       setErrorCount(7);
-      puntos.current = palabraJuego.length * 10;
+      countPalabrasJugadas.current = 0;
       setIsGameOver(false);
       setIsWinGame(false);
     }
@@ -118,6 +117,7 @@ export const GameProvider = ({ children }) => {
     gameOver: isGameOver,
     gameWin: isWinGame,
     resetWord,
+    countPalabrasJugadas,
   };
 
   // Proveer el contexto a los componentes hijos

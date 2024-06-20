@@ -15,6 +15,7 @@ export default function Game() {
     resetWord,
     gameOver,
     gameWin,
+    countPalabrasJugadas,
   } = useGameContext();
 
   function setLetter(event) {
@@ -43,11 +44,27 @@ export default function Game() {
   return (
     <>
       {gameOver && <GameOver />}
-      {gameWin && <GameWin />}
+      {/* {gameWin && <GameWin />} */}
       <div className="game-content">
-        <div className="content-errors">
-          {errorCount}
-          <span>Intentos</span>
+        <div
+          style={{
+            width: "100%",
+            position: "relative",
+            display: "flex",
+            justifyContent: "",
+          }}
+        >
+          <div
+            className="content"
+            style={{ width: "10%", marginRight: "auto" }}
+          >
+            {countPalabrasJugadas.current }
+            <span>Adivinadas</span>
+          </div>
+          <div className="content" style={{ width: "10%", marginLeft: "auto" }}>
+            {errorCount}
+            <span>Intentos</span>
+          </div>
         </div>
         <div className="representation-game">
           <HorcaGame />
