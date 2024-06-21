@@ -115,6 +115,7 @@ export const GameProvider = ({ children }) => {
     errorCount,
     palabraToGuess: palabraAdivinar,
     gameOver: isGameOver,
+    setIsGameOver,
     gameWin: isWinGame,
     resetWord,
     countPalabrasJugadas,
