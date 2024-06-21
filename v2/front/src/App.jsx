@@ -1,5 +1,5 @@
 import "./App.css";
-import Index from "./Juego";
+import Index from "./Juego/Index";
 import Game from "./Juego/Game";
 import { Route, Routes } from "react-router-dom";
 

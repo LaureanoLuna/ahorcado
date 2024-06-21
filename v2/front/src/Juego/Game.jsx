@@ -37,7 +37,6 @@ export default function Game() {
   }
 
   useEffect(() => {
-    setCountPalabrasJugadas(0);
     inputRef.current.focus();
     const interval = setInterval(() => {
       inputRef.current.focus();
