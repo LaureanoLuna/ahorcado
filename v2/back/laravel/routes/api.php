@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PalabraController;
+use App\Http\Controllers\PuntajesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,5 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::get('/palabras', [PalabraController::class, 'index']);
+
+Route::get('/puntajeMin/{puntosJugados}', [PuntajesController::class, 'pointsValidate']);

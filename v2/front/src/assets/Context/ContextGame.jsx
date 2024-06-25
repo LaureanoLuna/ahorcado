@@ -6,8 +6,8 @@ import React, {
   useState,
 } from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
-import { useLocation } from "react-router-dom";
 import useTimerGame from "../Hooks/useTimerGame.mjs";
+import { getMinPointGame } from "../Function/axiosPuntos.jsx";
 
 // Creación del contexto del juego
 const GameContext = createContext();
@@ -26,9 +26,6 @@ export const GameProvider = ({ children }) => {
 
   // Referencia para almacenar los puntos, inicializados en función de la longitud de la palabra
   const countPalabrasJugadas = useRef(0);
-
-  // Obtener la ruta actual usando react-router
-  const { pathname } = useLocation();
 
   // Estado para el conteo de errores
   const [errorCount, setErrorCount] = useState(7);
@@ -122,6 +119,8 @@ export const GameProvider = ({ children }) => {
       setIsGameOver(true);
     }
   }, [timer]);
+
+  
 
   // Valor del contexto que será proporcionado a los componentes hijos
   const contextValue = {

@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
             ['palabra' => 'arbol', 'dificultad' => 1],
             ['palabra' => 'Argentina', 'dificultad' => 3],
         ]);
+
+        DB::table('puntajes')->insert([
+            ['nombre' => 'mal', 'puntos' => 1]
+        ]);
     }
 }
