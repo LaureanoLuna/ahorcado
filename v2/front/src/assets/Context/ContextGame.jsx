@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
 import { useLocation } from "react-router-dom";
+import useTimerGame from "../Hooks/useTimerGame.mjs";
 
 // Creación del contexto del juego
 const GameContext = createContext();
@@ -19,6 +20,8 @@ export const GameProvider = ({ children }) => {
   // Obtener la palabra de juego y la palabra a adivinar del hook personalizado
   const { palabraJuego, palabraAdivinar, getPalabraRandom } =
     usePalabraRandom();
+
+  const { timer, setTimer } = useTimerGame();
 
   // Referencia para almacenar los puntos, inicializados en función de la longitud de la palabra
   const countPalabrasJugadas = useRef(0);
@@ -59,6 +62,7 @@ export const GameProvider = ({ children }) => {
 
     // Actualizar puntos y marcar el juego como ganado
     handlePuntos();
+    resetTimer();
     setIsWinGame(true);
     getPalabraRandom();
   };
@@ -86,16 +90,14 @@ export const GameProvider = ({ children }) => {
     countPalabrasJugadas.current += 1;
   };
 
-  // Manejo de la ruta (funcionalidad pendiente de implementación)
-  const routePath = () => {
-    if (pathname === "/game") {
-      // Lógica específica para la ruta /game (no implementada)
-    }
-  };
-
   // Reiniciar la palabra de juego
   const resetWord = () => {
     getPalabraRandom();
+  };
+
+  // Reiniciar el Timer del Juego
+  const resetTimer = () => {
+    setTimer((newTimer) => (newTimer = 11));
   };
 
   // Efecto para reiniciar el juego cuando la palabra de juego cambia
@@ -103,10 +105,17 @@ export const GameProvider = ({ children }) => {
     if (isGameOver) {
       setErrorCount(7);
       countPalabrasJugadas.current = 0;
+      resetTimer();
       setIsGameOver(false);
       setIsWinGame(false);
     }
   }, [palabraJuego]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setIsGameOver(true);
+    }
+  }, [timer]);
 
   // Valor del contexto que será proporcionado a los componentes hijos
   const contextValue = {
@@ -119,6 +128,7 @@ export const GameProvider = ({ children }) => {
     gameWin: isWinGame,
     resetWord,
     countPalabrasJugadas,
+    timer,
   };
 
   // Proveer el contexto a los componentes hijos

@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useGameContext } from "../Context/ContextGame";
 
 export default function TimerGame() {
-  const [timer, setTimer] = useState(10);
-  const { setIsGameOver } = useGameContext();
+  const { timer } = useGameContext();
+
+  const timerOn = () => {
+    const dom = document.getElementById("timer-on");
+    if (dom) {
+      // Si el timer es menor o igual a 5, el color del texto es rojo
+      // Si es mayor a 5, el color del texto es blanco
+      dom.style.color = timer <= 5 ? "red" : "white";
+    }
+  };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimer((prevTimer) => Math.max(prevTimer - 1, 0));
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const timerElement = document.getElementById("timer-on");
-
-    if (timer <= 5) {
-      timerElement.style.color = "red";
-    } else {
-      timerElement.style.color = "white";
-    }
-
-    if (timer === 0) {
-      setIsGameOver(true);
-    }
+    timerOn();
   }, [timer]);
 
   return (

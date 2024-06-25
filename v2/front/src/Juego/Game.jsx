@@ -3,7 +3,7 @@ import Letra from "../assets/Components/Letra";
 import { useGameContext } from "../assets/Context/ContextGame";
 import GameOver from "../assets/Components/GameOver";
 import HorcaGame from "../assets/Components/HorcaGame";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BoxCount from "../assets/Components/BoxCount";
 import TimerGame from "../assets/Components/TimerGame";
 
