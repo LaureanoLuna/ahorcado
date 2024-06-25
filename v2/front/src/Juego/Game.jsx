@@ -19,6 +19,7 @@ export default function Game() {
     resetWord,
     gameOver,
     countPalabrasJugadas,
+    resetGame,
   } = useGameContext();
 
   function setLetter(event) {
@@ -80,7 +81,13 @@ export default function Game() {
           />
         </div>
         <button onClick={handleChangeWord}>Reset</button>
-        <button style={{ background: "red" }} onClick={() => navigate("/")}>
+        <button
+          style={{ background: "red" }}
+          onClick={() => {
+            resetGame();
+            navigate("/");
+          }}
+        >
           Volver
         </button>
       </div>

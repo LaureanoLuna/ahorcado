@@ -21,6 +21,7 @@ export const GameProvider = ({ children }) => {
   const { palabraJuego, palabraAdivinar, getPalabraRandom } =
     usePalabraRandom();
 
+  //Obtenemos el timer del hook personalizado
   const { timer, setTimer } = useTimerGame();
 
   // Referencia para almacenar los puntos, inicializados en función de la longitud de la palabra
@@ -97,17 +98,22 @@ export const GameProvider = ({ children }) => {
 
   // Reiniciar el Timer del Juego
   const resetTimer = () => {
-    setTimer((newTimer) => (newTimer = 11));
+    setTimer(11);
+  };
+
+  //Reseteamos el juego
+  const resetGame = () => {
+    setErrorCount(7);
+    countPalabrasJugadas.current = 0;
+    resetTimer();
+    setIsGameOver(false);
+    setIsWinGame(false);
   };
 
   // Efecto para reiniciar el juego cuando la palabra de juego cambia
   useEffect(() => {
     if (isGameOver) {
-      setErrorCount(7);
-      countPalabrasJugadas.current = 0;
-      resetTimer();
-      setIsGameOver(false);
-      setIsWinGame(false);
+      resetGame();
     }
   }, [palabraJuego]);
 
@@ -129,6 +135,7 @@ export const GameProvider = ({ children }) => {
     resetWord,
     countPalabrasJugadas,
     timer,
+    resetGame,
   };
 
   // Proveer el contexto a los componentes hijos
