@@ -8,7 +8,7 @@ export async function fetchPalabraRandom() {
   try {
     /* REALIZAMOS EL FETCH HACIA LA URL */
     const resp = await axios.get("/palabras");
-
+    console.log(resp);
 
     /* VERIFICAMOS EL ESTADO DE LA CONSULTA */
     if (!resp.statusText === "OK") {
