@@ -7,14 +7,17 @@ export async function fetchPalabraRandom() {
 
   try {
     /* REALIZAMOS EL FETCH HACIA LA URL */
-    const resp = await axios.get('/palabras')
+    const resp = await axios.get("/palabras");
+
+
     /* VERIFICAMOS EL ESTADO DE LA CONSULTA */
-    if (!resp.statusText === 'OK') {
+    if (!resp.statusText === "OK") {
       /* DE SER NEGATIVA MANEJAMOS EL ERROR */
       throw new Error(`Error fetching random word: ${resp.statusText}`);
     }
     /* CAPTAMOS EL VALOR DE LA RESPUESTA Y LO CONVERTIMOS EN UN JSON */
     const data = await resp.data;
+
     /* VALIDAMOS QUE LA VARIBLE EXISTA, SEA UN ARREGLO Y CONTENGA UN VALOR */
     if (!data || data.length === 0) {
       throw new Error("Invalid data received from the server");

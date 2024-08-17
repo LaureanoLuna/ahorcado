@@ -15,7 +15,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/puntaje", PuntajeRouters);
+app.use(PuntajeRouters);
 
 try {
   await db.authenticate();

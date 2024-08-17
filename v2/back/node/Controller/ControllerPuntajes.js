@@ -1,5 +1,6 @@
 //Importamos Modelo
 
+import { Op } from "sequelize";
 import PuntajeModels from "../Models/PuntajeModels.js";
 
 /* Metodos para Acceso al CRUD */
@@ -9,7 +10,7 @@ import PuntajeModels from "../Models/PuntajeModels.js";
 export const getAllPuntajes = async (req, res) => {
   try {
     const puntajes = await PuntajeModels.findAll({
-      order: [["puntos",'DESC']],
+      order: [["puntos", "DESC"]],
     });
     res.json(puntajes);
   } catch (error) {
@@ -69,4 +70,23 @@ export const eliminarPuntaje = async (req, res) => {
   } catch (error) {
     res.json({ mensaje: error.message });
   }
+};
+
+/* Funcion que verifica si el jugador tiene un puntaje mayor al mas bajo para poder ser guardado */
+export const getMinPoint = async (req, res) => {
+  let response = false;
+  try {
+    const result = await PuntajeModels.findAll({
+      where: {
+        puntos: {
+          [Op.lt]: req.params.point,
+        },
+      },
+    });
+
+    if (result.length > 0) {
+      response = true;
+    }
+    res.json({ resultado: response });
+  } catch (error) {}
 };
