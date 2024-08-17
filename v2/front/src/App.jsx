@@ -2,6 +2,7 @@ import "./App.css";
 import Index from "./Juego/Index";
 import Game from "./Juego/Game";
 import { Route, Routes } from "react-router-dom";
+import Puntajes from "./Juego/Puntajes";
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/point" element={"hola"} />
+        <Route path="/point" element={<Puntajes />} />
         <Route path="/instruccions" />
         <Route path="/about" />
       </Routes>
