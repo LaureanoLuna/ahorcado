@@ -8,7 +8,7 @@ export default function Puntajes() {
 
   const fetchPuntajes = async () => {
     try {
-      const response = await axios.get("/");
+      const response = await axios.get("/puntajes");
       setPuntajes(response.data);
     } catch (err) {
       setError(err.message);
@@ -30,7 +30,7 @@ export default function Puntajes() {
         }}
       >
         <span style={{ width: "25%" }}>{nombre}</span>
-        <span style={{ width: "25%" }}>{puntos}</span>
+        <span style={{ width: "25%" }}>{puntos} pts</span>
       </div>
     );
   };
@@ -47,7 +47,7 @@ export default function Puntajes() {
         flexDirection: "column",
         gap: "2em",
         fontSize: "20px",
-        textTransform:"uppercase"
+        textTransform: "uppercase",
       }}
     >
       <Link
@@ -64,8 +64,8 @@ export default function Puntajes() {
       <div>
         {error && <div>Error: {error}</div>}
         {puntajes.length > 0 ? (
-          puntajes.map((p) => (
-            <PointPlay nombre={p.nombre} puntos={p.puntos} /> // Asegúrate de usar una clave única
+          puntajes.map((p, i) => (
+            <PointPlay key={i} nombre={p.nombre} puntos={p.puntos} /> // Asegúrate de usar una clave única
           ))
         ) : (
           <div>No hay puntajes disponibles.</div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import imgGameOver from "../Img/gameOver.png";
 import { useNavigate } from "react-router-dom";
 import { getMinPointGame } from "../Function/axiosPuntos";
 import { useGameContext } from "../Context/ContextGame";
 
+import imgGameOver from "../Img/gameOver.png";
+
 // ModalCargaPuntos Component
-function ModalCargaPuntos() {
+/* function ModalCargaPuntos() {
   const handleSubmit = () => {};
   return (
     <div
@@ -46,7 +47,7 @@ function ModalCargaPuntos() {
       </form>
     </div>
   );
-}
+} */
 
 // GameOver Component
 export default function GameOver() {
@@ -56,11 +57,12 @@ export default function GameOver() {
   const validate = async () => {
     try {
       const response = await getMinPointGame(countPalabrasJugadas.current);
+
       if (!response) {
-        navigate("/");
+        navigate("/No tienes puntos");
         return;
       }
-      <ModalCargaPuntos />;
+      navigate("/point/true");
     } catch (error) {
       console.error("Error en la validación de puntos:", error);
       navigate("/");
@@ -90,8 +92,7 @@ export default function GameOver() {
         alignItems: "center",
       }}
     >
-      <ModalCargaPuntos />
-      {/* <img src={imgGameOver} className="game-over-image" alt="Game Over" /> */}
+      <img src={imgGameOver} className="game-over-image" alt="Game Over" />
     </div>
   );
 }

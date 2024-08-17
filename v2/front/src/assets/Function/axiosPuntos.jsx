@@ -10,15 +10,12 @@ import axios from "./axios";
  */
 export async function getMinPointGame(puntosJugados) {
   try {
-    const resp = await axios.get(`puntajeMin/${puntosJugados}`);
+    const resp = await axios.get(`/puntajes/puntajeMin/${puntosJugados}`);
 
     if (resp.status !== 200 && resp.status !== 205) {
       throw new Error(`Error en la Carga de los Puntos: ${resp.statusText}`);
     }
-
-    const data = await resp.data.response;
-    console.log(data);
-
+    const data = await resp.data.resultado;
     return data;
   } catch (error) {
     console.error("Error en la Carga de los Puntos:", error.message);

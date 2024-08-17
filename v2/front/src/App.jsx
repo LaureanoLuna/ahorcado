@@ -9,9 +9,9 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/:mensaje?" element={<Index />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/point" element={<Puntajes />} />
+        <Route path="/point/:bool?" element={<Puntajes />} />
         <Route path="/instruccions" />
         <Route path="/about" />
       </Routes>
