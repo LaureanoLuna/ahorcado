@@ -19,6 +19,9 @@ function usePalabraRandom() {
   // Referencia para almacenar la palabra a adivinar, inicializada como un array vacío
   const palabraAdivinar = useRef([]);
 
+  // Referencia para almacenar las pistas brindadas desde la IA
+  const pistasIA = useRef([]);
+
   /**
    * Actualiza el almacenamiento en la variable con la palabra dada.
    * @param {string} palabra - La palabra a almacenar.
@@ -45,17 +48,20 @@ function usePalabraRandom() {
    */
   const getPalabraRandom = async () => {
     try {
-      const palabra = await fetchPalabraRandom();
+      const { palabra, pistas } = await fetchPalabraRandom();
 
-      if (!palabra || palabrasJugadas.includes(palabra)) {
+      const pal = await palabra.palabra;
+      
+      if (!pal || palabrasJugadas.includes(pal)) {
         getPalabraRandom(); // Reintentar si las condiciones no se cumplen
         return;
       }
 
       // Actualizar local storage, estado de la palabra de juego y palabra a adivinar
-      updatePalabrasJugadas(palabra);
-      setPalabraJuego(palabra);
-      initializePalabraAdivinar(palabra);
+      updatePalabrasJugadas(pal);
+      setPalabraJuego(pal);
+      pistasIA.current = pistas;
+      initializePalabraAdivinar(pal);
     } catch (error) {
       console.error("Error al obtener la palabra:", error);
     }
@@ -72,7 +78,13 @@ function usePalabraRandom() {
   }, [pathname]);
 
   // Retornar los estados y funciones necesarios para el manejo de la palabra aleatoria
-  return { palabraJuego, palabraAdivinar, getPalabraRandom, palabrasJugadas };
+  return {
+    palabraJuego,
+    palabraAdivinar,
+    getPalabraRandom,
+    palabrasJugadas,
+    pistasIA,
+  };
 }
 
 export default usePalabraRandom;
