@@ -51,7 +51,7 @@ function usePalabraRandom() {
       const { palabra, pistas } = await fetchPalabraRandom();
 
       const pal = await palabra.palabra;
-      
+
       if (!pal || palabrasJugadas.includes(pal)) {
         getPalabraRandom(); // Reintentar si las condiciones no se cumplen
         return;
@@ -83,6 +83,7 @@ function usePalabraRandom() {
     palabraAdivinar,
     getPalabraRandom,
     palabrasJugadas,
+    setPalabrasJugadas,
     pistasIA,
   };
 }

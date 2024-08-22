@@ -11,53 +11,55 @@ export default function Game() {
   const [inputLetter, setInputLetter] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
-
   const {
     handleLetter,
     errorCount,
     palabraToGuess,
     resetWord,
-    gameOver,
     countPalabrasJugadas,
     resetGame,
+    gameOver,
   } = useGameContext();
 
-  function setLetter(event) {
+  const setLetter = (event) => {
     const enteredLetter = event.target.value;
     setInputLetter(enteredLetter);
     handleLetter(enteredLetter);
     setTimeout(() => {
       setInputLetter("");
     }, 300);
-  }
+  };
 
-  function handleChangeWord() {
+  const handleExit = async () => {
+    await resetGame();
+    navigate("/");
+  };
+
+  const handleChangeWord = () => {
     resetWord();
-  }
+  };
 
   useEffect(() => {
     inputRef.current.focus();
     const interval = setInterval(() => {
       inputRef.current.focus();
     }, 1000);
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
+
+  const gameContentStyle = {
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "2em",
+  };
 
   return (
     <>
-      {gameOver && <GameOver />}
+      {gameOver.current && <GameOver />}
       <div className="game-content">
-        <div
-          style={{
-            width: "100%",
-            position: "relative",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "2em",
-          }}
-        >
+        <div style={gameContentStyle}>
           <BoxCount num={countPalabrasJugadas.current} text={"Adivinadas"} />
           <TimerGame />
           <BoxCount num={errorCount} text={"Intentos"} />
@@ -72,7 +74,7 @@ export default function Game() {
         </div>
         <div>
           <input
-            autoComplete="false"
+            autoComplete="off"
             id="input-letter"
             ref={inputRef}
             value={inputLetter}
@@ -81,13 +83,7 @@ export default function Game() {
           />
         </div>
         <button onClick={handleChangeWord}>Reset</button>
-        <button
-          style={{ background: "red" }}
-          onClick={() => {
-            resetGame();
-            navigate("/");
-          }}
-        >
+        <button style={{ background: "red" }} onClick={handleExit}>
           Volver
         </button>
       </div>

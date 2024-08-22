@@ -1,33 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import useTimerGame from "../Hooks/useTimerGame.mjs";
 import { useGameContext } from "../Context/ContextGame";
 
 export default function TimerGame() {
-  const { timer } = useGameContext();
-
-  const timerOn = () => {
-    const dom = document.getElementById("timer-on");
-    if (dom) {
-      // Si el timer es menor o igual a 5, el color del texto es rojo
-      // Si es mayor a 5, el color del texto es blanco
-      dom.style.color = timer <= 5 ? "red" : "white";
-    }
-  };
+  const { timer } = useTimerGame();
+  const { gameOver } = useGameContext();
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    timerOn();
+    if (timerRef.current) {
+      timerRef.current.style.color = timer <= 5 ? "red" : "white";
+    }
+
+    if (timer === 0) {
+      gameOver.current = true;
+    }
   }, [timer]);
 
+  const timerStyle = {
+    width: "100%",
+    borderTop: "none",
+    borderLeft: "none",
+    borderRight: "none",
+  };
+
   return (
-    <div
-      id="timer-on"
-      className="content"
-      style={{
-        width: "100%",
-        borderTop: "none",
-        borderLeft: "none",
-        borderRight: "none",
-      }}
-    >
+    <div id="timer-on" className="content" style={timerStyle} ref={timerRef}>
       {timer} seg
     </div>
   );

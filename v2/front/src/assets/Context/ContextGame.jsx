@@ -1,6 +1,11 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
-import useTimerGame from "../Hooks/useTimerGame.mjs";
 
 // Creación del contexto del juego
 const GameContext = createContext();
@@ -10,12 +15,17 @@ export const useGameContext = () => useContext(GameContext);
 
 // Componente proveedor del contexto del juego
 export const GameProvider = ({ children }) => {
-  const { palabraJuego, palabraAdivinar, getPalabraRandom } = usePalabraRandom();
-  const { timer, setTimer } = useTimerGame();
+  const {
+    palabraJuego,
+    palabraAdivinar,
+    getPalabraRandom,
+    setPalabrasJugadas,
+  } = usePalabraRandom();
 
   const countPalabrasJugadas = useRef(0);
   const [errorCount, setErrorCount] = useState(7);
-  const [isGameOver, setIsGameOver] = useState(false);
+  /* const [isGameOver, setIsGameOver] = useState(false); */
+  const isGameOver = useRef(false);
   const [isWinGame, setIsWinGame] = useState(false);
   const [pistaNumbre, setPistaNumbre] = useState(0);
 
@@ -30,35 +40,33 @@ export const GameProvider = ({ children }) => {
     }
 
     palabraAdivinar.current = palabraAdivinar.current.map((char, index) =>
-      palabraJuego[index].toLowerCase() === lowercaseLetter ? palabraJuego[index] : char
+      palabraJuego[index].toLowerCase() === lowercaseLetter
+        ? palabraJuego[index]
+        : char
     );
 
     if (palabraAdivinar.current.join("") === palabraJuego) {
       countPalabrasJugadas.current += 1;
-      resetTimer();
       setIsWinGame(true);
       getPalabraRandom();
     }
   };
 
-  const resetTimer = () => setTimer(11);
-
-  const resetGame = () => {
-    setErrorCount(7);
+  /* Funcion el la cual resetearmos todo el juego, ya sea porque perdio o dejo de jugar */
+  const resetGame = async () => {
+    await Promise.all([
+      setErrorCount(7),
+      setIsWinGame(false),
+      setPistaNumbre(0),
+      setPalabrasJugadas([]),
+    ]);
+    isGameOver.current = false;
     countPalabrasJugadas.current = 0;
-    resetTimer();
-    setIsGameOver(false);
-    setIsWinGame(false);
-    setPistaNumbre(0);
   };
 
   useEffect(() => {
-    if (isGameOver) resetGame();
-  }, [palabraJuego, isGameOver]);
-
-  useEffect(() => {
-    if (timer === 0) setIsGameOver(true);
-  }, [timer]);
+    if (isGameOver.current) resetGame();
+  }, [palabraJuego, isGameOver.current]);
 
   const contextValue = {
     handleLetter,
@@ -66,17 +74,13 @@ export const GameProvider = ({ children }) => {
     errorCount,
     palabraToGuess: palabraAdivinar,
     gameOver: isGameOver,
-    setIsGameOver,
     gameWin: isWinGame,
     resetWord: getPalabraRandom,
     countPalabrasJugadas,
-    timer,
     resetGame,
   };
 
   return (
-    <GameContext.Provider value={contextValue}>
-      {children}
-    </GameContext.Provider>
+    <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
   );
 };
