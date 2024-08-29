@@ -21,6 +21,7 @@ export default function Game() {
     gameOver,
   } = useGameContext();
 
+  /* Metodo que maneja el input donde ingresan las letras */
   const setLetter = (event) => {
     const enteredLetter = event.target.value;
     setInputLetter(enteredLetter);
@@ -30,11 +31,13 @@ export default function Game() {
     }, 300);
   };
 
+  /* Metodo que termina el juego por voluntad del jugador */
   const handleExit = async () => {
     await resetGame();
     navigate("/");
   };
 
+  /* Metodo para uso en desarrollo y resetear la palabra en juego */
   const handleChangeWord = () => {
     resetWord();
   };
@@ -47,6 +50,7 @@ export default function Game() {
     return () => clearInterval(interval);
   }, []);
 
+  /* Contante de estilos */
   const gameContentStyle = {
     width: "100%",
     position: "relative",
@@ -57,7 +61,7 @@ export default function Game() {
 
   return (
     <>
-      {gameOver.current && <GameOver />}
+      {gameOver && <GameOver />}
       <div className="game-content">
         <div style={gameContentStyle}>
           <BoxCount num={countPalabrasJugadas.current} text={"Adivinadas"} />

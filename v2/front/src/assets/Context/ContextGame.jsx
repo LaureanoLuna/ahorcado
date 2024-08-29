@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
+import useTimerGame from "../Hooks/useTimerGame.mjs";
 
 // Creación del contexto del juego
 const GameContext = createContext();
@@ -22,20 +23,31 @@ export const GameProvider = ({ children }) => {
     setPalabrasJugadas,
   } = usePalabraRandom();
 
+  const { timer, resetiarTiempo } = useTimerGame();
+
   const countPalabrasJugadas = useRef(0);
   const [errorCount, setErrorCount] = useState(7);
-  /* const [isGameOver, setIsGameOver] = useState(false); */
-  const isGameOver = useRef(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+
   const [isWinGame, setIsWinGame] = useState(false);
   const [pistaNumbre, setPistaNumbre] = useState(0);
 
-  const handleLetter = (letter = null) => {
+  const restaErrorCount = () => {
+    setErrorCount((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleIsGameOver = () => {
+    if (errorCount === 1) setIsGameOver(true);
+  };
+
+  const handleLetter = async (letter = null) => {
     if (!letter) return;
 
     const lowercaseLetter = letter.toLowerCase();
 
     if (!palabraJuego.includes(lowercaseLetter)) {
-      setErrorCount((prev) => Math.max(prev - 1, 0));
+      restaErrorCount();
+      handleIsGameOver();
       return;
     }
 
@@ -48,6 +60,7 @@ export const GameProvider = ({ children }) => {
     if (palabraAdivinar.current.join("") === palabraJuego) {
       countPalabrasJugadas.current += 1;
       setIsWinGame(true);
+      resetiarTiempo();
       getPalabraRandom();
     }
   };
@@ -60,13 +73,9 @@ export const GameProvider = ({ children }) => {
       setPistaNumbre(0),
       setPalabrasJugadas([]),
     ]);
-    isGameOver.current = false;
+    setIsGameOver(false);
     countPalabrasJugadas.current = 0;
   };
-
-  useEffect(() => {
-    if (isGameOver.current) resetGame();
-  }, [palabraJuego, isGameOver.current]);
 
   const contextValue = {
     handleLetter,
@@ -74,6 +83,7 @@ export const GameProvider = ({ children }) => {
     errorCount,
     palabraToGuess: palabraAdivinar,
     gameOver: isGameOver,
+    setIsGameOver,
     gameWin: isWinGame,
     resetWord: getPalabraRandom,
     countPalabrasJugadas,

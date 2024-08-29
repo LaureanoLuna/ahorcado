@@ -53,16 +53,7 @@ export default function Index() {
           </span>
         )}
 
-        {/* <div
-          style={{ cursor: "pointer" }}
-          data-link="img-verdugo"
-          className="button-link-index"
-          to={"game"}
-          onClick={handleParams}
-        >
-          Jugar
-        </div> */}
-        <Link data-link="img-caliz" className="button-link-index" to={"game"}>
+        <Link data-link="img-verdugo" className="button-link-index" to={"game"}>
           Jugar
         </Link>
 

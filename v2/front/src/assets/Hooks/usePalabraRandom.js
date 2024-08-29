@@ -48,20 +48,18 @@ function usePalabraRandom() {
    */
   const getPalabraRandom = async () => {
     try {
-      const { palabra, pistas } = await fetchPalabraRandom();
+      const palabra = await fetchPalabraRandom();
 
-      const pal = await palabra.palabra;
-
-      if (!pal || palabrasJugadas.includes(pal)) {
+      if (!palabra || palabrasJugadas.includes(palabra)) {
         getPalabraRandom(); // Reintentar si las condiciones no se cumplen
         return;
       }
 
       // Actualizar local storage, estado de la palabra de juego y palabra a adivinar
-      updatePalabrasJugadas(pal);
-      setPalabraJuego(pal);
-      pistasIA.current = pistas;
-      initializePalabraAdivinar(pal);
+      updatePalabrasJugadas(palabra);
+      setPalabraJuego(palabra);
+      //pistasIA.current = pistas;
+      initializePalabraAdivinar(palabra);
     } catch (error) {
       console.error("Error al obtener la palabra:", error);
     }

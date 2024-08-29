@@ -36,7 +36,7 @@ export default function ImgLogosIndex() {
     // Devolver una función de limpieza para eliminar el event listener
     return () => {
       buttonLink?.forEach((element) => {
-        element.removeEventListener("click", handleMouseEnter);
+        element.removeEventListener("mouseenter", handleMouseEnter);
         element.removeEventListener("mouseleave", mouseLeave);
       });
     };
