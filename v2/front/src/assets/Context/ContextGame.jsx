@@ -88,6 +88,7 @@ export const GameProvider = ({ children }) => {
     resetWord: getPalabraRandom,
     countPalabrasJugadas,
     resetGame,
+    palabraJuego,
   };
 
   return (

@@ -6,11 +6,14 @@ import HorcaGame from "../assets/Components/HorcaGame";
 import { useNavigate } from "react-router-dom";
 import BoxCount from "../assets/Components/BoxCount";
 import TimerGame from "../assets/Components/TimerGame";
+import useOpenIA from "../assets/Hooks/useOpenIA.mjs";
 
 export default function Game() {
   const [inputLetter, setInputLetter] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const { obtenerPistas } = useOpenIA();
+  const [pist, setPist] = useState();
   const {
     handleLetter,
     errorCount,
@@ -19,6 +22,7 @@ export default function Game() {
     countPalabrasJugadas,
     resetGame,
     gameOver,
+    palabraJuego
   } = useGameContext();
 
   /* Metodo que maneja el input donde ingresan las letras */
@@ -42,6 +46,19 @@ export default function Game() {
     resetWord();
   };
 
+  const wantPist = async () => {
+    if (errorCount % 3 == 0) {
+      let p = await obtenerPistas(palabraJuego);
+      setPist(p);
+    } else {
+      setPist("");
+    }
+  };
+
+  useEffect(() => {
+    wantPist();
+  }, [errorCount]);
+
   useEffect(() => {
     inputRef.current.focus();
     const interval = setInterval(() => {
@@ -62,6 +79,7 @@ export default function Game() {
   return (
     <>
       {gameOver && <GameOver />}
+      {pist && <div>hola</div>}
       <div className="game-content">
         <div style={gameContentStyle}>
           <BoxCount num={countPalabrasJugadas.current} text={"Adivinadas"} />
