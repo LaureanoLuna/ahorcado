@@ -36,6 +36,7 @@ export const getPuntaje = async (req, res) => {
 /* Crear un registro */
 
 export const cargarPuntaje = async (req, res) => {
+  console.log(req.body);  
   try {
     await PuntajeModels.create(req.body);
     res.json({ message: "Se cargo correctamente" });

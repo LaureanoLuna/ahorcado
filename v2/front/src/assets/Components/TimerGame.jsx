@@ -4,7 +4,7 @@ import { useGameContext } from "../Context/ContextGame";
 
 export default function TimerGame() {
   const { timer, setTimer } = useTimerGame();
-  const { gameOver, setIsGameOver, palabraJuego } = useGameContext();
+  const { setIsGameOver, palabraJuego } = useGameContext();
   const timerRef = useRef(null);
 
   const updateTimerColor = () => {

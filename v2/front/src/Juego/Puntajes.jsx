@@ -1,42 +1,27 @@
 import React, { useEffect, useState } from "react";
-import axios from "../assets/Function/axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import usePuntajes from "../assets/Hooks/usePuntajes.mjs";
+import Puntaje from "../assets/Components/Puntaje";
+import ModalCargaPuntos from "../assets/Components/ModalCargaPuntos";
 
 export default function Puntajes() {
-  const [puntajes, setPuntajes] = useState([]);
-  const [error, setError] = useState(null);
+  const { fetchPuntajes, puntajes, error } = usePuntajes(); // Correcto nombre de función
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const { puntos, seCarga } = useParams();
 
-  const fetchPuntajes = async () => {
+  const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get("/puntajes");
-      setPuntajes(response.data);
+      await fetchPuntajes(); // Llamada a la función fetchPuntajes
     } catch (err) {
-      setError(err.message);
+      console.error("Error fetching puntajes:", err);
+    } finally {
+      setLoading(false); // Desactiva el loading al terminar
     }
   };
 
-  const PointPlay = ({ nombre, puntos }) => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-          gap: "1em",
-          borderBottom: "1px solid white ",
-          borderRadius: "2px",
-          padding: "15px",
-          textAlign: "center",
-        }}
-      >
-        <span style={{ width: "25%" }}>{nombre}</span>
-        <span style={{ width: "25%" }}>{puntos} pts</span>
-      </div>
-    );
-  };
-
   useEffect(() => {
-    fetchPuntajes();
+    fetchData();
   }, []);
 
   return (
@@ -51,7 +36,7 @@ export default function Puntajes() {
       }}
     >
       <Link
-        to={"/"}
+        to="/"
         style={{
           border: "solid 1px",
           color: "white",
@@ -62,10 +47,13 @@ export default function Puntajes() {
         Volver
       </Link>
       <div>
+        <ModalCargaPuntos isOpen={seCarga} puntos={puntos}/>
         {error && <div>Error: {error}</div>}
-        {puntajes.length > 0 ? (
+        {loading ? (
+          <div>Cargando puntajes...</div> // Mensaje de carga
+        ) : puntajes.length > 0 ? (
           puntajes.map((p, i) => (
-            <PointPlay key={i} nombre={p.nombre} puntos={p.puntos} /> // Asegúrate de usar una clave única
+            <Puntaje key={i} nombre={p.nombre} puntos={p.puntos} />
           ))
         ) : (
           <div>No hay puntajes disponibles.</div>

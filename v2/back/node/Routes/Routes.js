@@ -23,7 +23,7 @@ router.get("/puntajes/", getAllPuntajes);
 router.get("/puntajes/:id", getPuntaje);
 router.get("/puntajes/puntajeMin/:point", getMinPoint);
 //Create
-router.post("/puntajes/", cargarPuntaje);
+router.post("/puntajes", cargarPuntaje);
 //Update
 router.put("/puntajes/:id", actualizaPuntaje);
 //Delete
