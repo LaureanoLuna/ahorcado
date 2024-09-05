@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
 import useTimerGame from "../Hooks/useTimerGame.mjs";
 
@@ -23,14 +17,13 @@ export const GameProvider = ({ children }) => {
     setPalabrasJugadas,
   } = usePalabraRandom();
 
-  const { timer, resetiarTiempo } = useTimerGame();
+  const { timer, resetiarTiempo, setTimer } = useTimerGame();
 
   const countPalabrasJugadas = useRef(0);
   const [errorCount, setErrorCount] = useState(7);
   const [isGameOver, setIsGameOver] = useState(false);
 
   const [isWinGame, setIsWinGame] = useState(false);
-  const [pistaNumbre, setPistaNumbre] = useState(0);
 
   const restaErrorCount = () => {
     setErrorCount((prev) => Math.max(prev - 1, 0));
@@ -59,20 +52,14 @@ export const GameProvider = ({ children }) => {
 
     if (palabraAdivinar.current.join("") === palabraJuego) {
       countPalabrasJugadas.current += 1;
-      setIsWinGame(true);
-      resetiarTiempo();
       getPalabraRandom();
+      setErrorCount(7);
     }
   };
 
   /* Funcion el la cual resetearmos todo el juego, ya sea porque perdio o dejo de jugar */
   const resetGame = async () => {
-    await Promise.all([
-      setErrorCount(7),
-      setIsWinGame(false),
-      setPistaNumbre(0),
-      setPalabrasJugadas([]),
-    ]);
+    await Promise.all([setErrorCount(7), setPalabrasJugadas([])]);
     setIsGameOver(false);
     countPalabrasJugadas.current = 0;
   };

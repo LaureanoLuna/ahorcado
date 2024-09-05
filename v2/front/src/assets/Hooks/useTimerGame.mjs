@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
 export default function useTimerGame() {
-  const TIEMPO = 20;
+  const TIEMPO = 60;
   const [timer, setTimer] = useState(TIEMPO);
 
-  const resetiarTiempo = () => {
-    setTimer(TIEMPO);
+  const resetiarTiempo = async () => {
+    await setTimer(TIEMPO);
   };
 
   useEffect(() => {
@@ -16,5 +16,5 @@ export default function useTimerGame() {
     return () => clearInterval(intervalId);
   }, [timer]);
 
-  return { timer, resetiarTiempo };
+  return { timer, resetiarTiempo, setTimer };
 }

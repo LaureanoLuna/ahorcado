@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function useOpenIA() {
-  const [pistas, setPistas] = useState("");
-  const [error, setError] = useState(null); // Estado para manejar errores
   const genAI = new GoogleGenerativeAI(
     "AIzaSyBUbNzL1QKwMy8h6P7NiOCAHRuU4RXv2j0"
   );
@@ -25,16 +22,14 @@ function useOpenIA() {
         throw new Error("No se recibió una respuesta válida de la API.");
       }
 
-      const respuesta = await resultado.response;
+      const respuesta = resultado.response;
       const texto = respuesta.text();
 
       if (!texto) {
         throw new Error("La respuesta no contiene texto.");
       }
 
-      console.log(texto);
-      setPistas(texto);
-      setError(null); // Limpiar el error si la llamada fue exitosa
+      return texto;
     } catch (error) {
       console.error("Error en la API de IA:", error);
       setError(error.message); // Guardar el mensaje de error en el estado

@@ -3,14 +3,9 @@ import useTimerGame from "../Hooks/useTimerGame.mjs";
 import { useGameContext } from "../Context/ContextGame";
 
 export default function TimerGame() {
-  const { timer } = useTimerGame();
-  const { gameOver, setIsGameOver } = useGameContext();
+  const { timer, setTimer } = useTimerGame();
+  const { gameOver, setIsGameOver, palabraJuego } = useGameContext();
   const timerRef = useRef(null);
-
-  useEffect(() => {
-    updateTimerColor();
-    checkGameOver();
-  }, [timer]);
 
   const updateTimerColor = () => {
     if (timerRef.current) {
@@ -23,6 +18,15 @@ export default function TimerGame() {
       setIsGameOver(true);
     }
   };
+
+  useEffect(() => {
+    updateTimerColor();
+    checkGameOver();
+  }, [timer]);
+
+  useEffect(() => {
+    setTimer(60);
+  }, [palabraJuego]);
 
   const timerStyle = {
     width: "100%",

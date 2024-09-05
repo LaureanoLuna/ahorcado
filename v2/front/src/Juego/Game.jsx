@@ -6,14 +6,15 @@ import HorcaGame from "../assets/Components/HorcaGame";
 import { useNavigate } from "react-router-dom";
 import BoxCount from "../assets/Components/BoxCount";
 import TimerGame from "../assets/Components/TimerGame";
-import useOpenIA from "../assets/Hooks/useOpenIA.mjs";
+import TextPista from "../assets/Components/TextPista";
 
 export default function Game() {
+  // Estado para la letra ingresada por el jugador
   const [inputLetter, setInputLetter] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const { obtenerPistas } = useOpenIA();
-  const [pist, setPist] = useState();
+
+  // Extracción de métodos y estados del contexto del juego
   const {
     handleLetter,
     errorCount,
@@ -22,52 +23,48 @@ export default function Game() {
     countPalabrasJugadas,
     resetGame,
     gameOver,
-    palabraJuego
+    palabraJuego,
   } = useGameContext();
 
-  /* Metodo que maneja el input donde ingresan las letras */
+  // Maneja el input donde el jugador ingresa las letras
   const setLetter = (event) => {
     const enteredLetter = event.target.value;
     setInputLetter(enteredLetter);
     handleLetter(enteredLetter);
+
+    // Limpia el input después de 300 ms
     setTimeout(() => {
       setInputLetter("");
     }, 300);
   };
 
-  /* Metodo que termina el juego por voluntad del jugador */
+  // Maneja la salida voluntaria del juego y reinicia el estado del juego
   const handleExit = async () => {
     await resetGame();
     navigate("/");
   };
 
-  /* Metodo para uso en desarrollo y resetear la palabra en juego */
+  // Método para cambiar la palabra a adivinar (principalmente para desarrollo)
   const handleChangeWord = () => {
     resetWord();
   };
 
-  const wantPist = async () => {
-    if (errorCount % 3 == 0) {
-      let p = await obtenerPistas(palabraJuego);
-      setPist(p);
-    } else {
-      setPist("");
-    }
-  };
-
-  useEffect(() => {
-    wantPist();
-  }, [errorCount]);
-
+  // Efecto para enfocar el input al cargar el componente y cada segundo
   useEffect(() => {
     inputRef.current.focus();
+
     const interval = setInterval(() => {
       inputRef.current.focus();
     }, 1000);
+
     return () => clearInterval(interval);
   }, []);
 
-  /* Contante de estilos */
+  // Efecto para reiniciar el juego al cargar el componente
+  useEffect(() => {
+  }, [palabraJuego]);
+
+  // Estilos del contenedor principal del juego
   const gameContentStyle = {
     width: "100%",
     position: "relative",
@@ -78,8 +75,8 @@ export default function Game() {
 
   return (
     <>
-      {gameOver && <GameOver />}
-      {pist && <div>hola</div>}
+      {gameOver && <GameOver />}{" "}
+      {/* Muestra la pantalla de Game Over si el juego ha terminado */}
       <div className="game-content">
         <div style={gameContentStyle}>
           <BoxCount num={countPalabrasJugadas.current} text={"Adivinadas"} />
@@ -89,6 +86,7 @@ export default function Game() {
         <div className="representation-game">
           <HorcaGame />
         </div>
+        <TextPista />
         <div id="word-to-guess">
           {palabraToGuess.current.map((letter, index) => (
             <Letra letter={letter} key={index} />
