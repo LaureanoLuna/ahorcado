@@ -10,7 +10,6 @@ function useOpenIA() {
       const modelo = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
         generationConfig: {
-          maxOutputTokens: 10,
           temperature: 1.5,
         },
       });

@@ -8,6 +8,7 @@ export default function Puntajes() {
   const { fetchPuntajes, puntajes, error } = usePuntajes(); // Correcto nombre de función
   const [loading, setLoading] = useState(true); // Estado para manejar la carga
   const { puntos, seCarga } = useParams();
+  const [isOpen, setIsOpen] = useState(seCarga ?? false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -22,7 +23,7 @@ export default function Puntajes() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isOpen]);
 
   return (
     <div
@@ -47,7 +48,7 @@ export default function Puntajes() {
         Volver
       </Link>
       <div>
-        <ModalCargaPuntos isOpen={seCarga} puntos={puntos}/>
+        {isOpen && <ModalCargaPuntos open={setIsOpen} puntos={puntos} />}
         {error && <div>Error: {error}</div>}
         {loading ? (
           <div>Cargando puntajes...</div> // Mensaje de carga

@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import usePalabraRandom from "../Hooks/usePalabraRandom";
-import useTimerGame from "../Hooks/useTimerGame.mjs";
+import { useLocation } from "react-router-dom";
 
 // Creación del contexto del juego
 const GameContext = createContext();
@@ -17,13 +23,11 @@ export const GameProvider = ({ children }) => {
     setPalabrasJugadas,
   } = usePalabraRandom();
 
-  const { timer, resetiarTiempo, setTimer } = useTimerGame();
+  const { pathname } = useLocation();
 
   const countPalabrasJugadas = useRef(0);
   const [errorCount, setErrorCount] = useState(7);
   const [isGameOver, setIsGameOver] = useState(false);
-
-  const [isWinGame, setIsWinGame] = useState(false);
 
   const restaErrorCount = () => {
     setErrorCount((prev) => Math.max(prev - 1, 0));
@@ -64,6 +68,14 @@ export const GameProvider = ({ children }) => {
     countPalabrasJugadas.current = 0;
   };
 
+  useEffect(() => {
+    if (pathname === "/game") {
+      setIsGameOver(false);
+      countPalabrasJugadas.current = 0;
+      setErrorCount(7);
+    }
+  }, [pathname]);
+
   const contextValue = {
     handleLetter,
     setErrorCount,
@@ -71,7 +83,6 @@ export const GameProvider = ({ children }) => {
     palabraToGuess: palabraAdivinar,
     gameOver: isGameOver,
     setIsGameOver,
-    gameWin: isWinGame,
     resetWord: getPalabraRandom,
     countPalabrasJugadas,
     resetGame,

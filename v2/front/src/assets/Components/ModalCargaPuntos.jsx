@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from "react";
+
 import axios from "../Function/axios";
 
-export default function ModalCargaPuntos({ isOpen, puntos }) {
-  const [open, setOpen] = useState(isOpen);
-
-  useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen]);
-
+export default function ModalCargaPuntos({ open, puntos }) {
   const postNewPuntaje = async (e) => {
     e.preventDefault();
 
@@ -15,16 +9,17 @@ export default function ModalCargaPuntos({ isOpen, puntos }) {
       .map((input) => input.value.toUpperCase())
       .join("");
 
-    const formData = new FormData();
-    formData.append("puntos", puntos);
-    formData.append("nombre", nombre);
+    const formData = { puntos: puntos, nombre: nombre };
 
     try {
+      console.log(formData);
+
       const response = await axios.post("/puntajes", formData);
       console.log("Puntaje enviado con éxito:", response.data);
-      setOpen(false); // Cierra el modal después de enviar los datos
     } catch (error) {
       console.error("Error al enviar el puntaje:", error.message);
+    } finally {
+      open(false); // Cierra el modal después de enviar los datos
     }
   };
 

@@ -8,7 +8,7 @@ import axios from "./axios";
  * @param {number} puntosJugados - Puntos obtenidos por el jugador.
  * @throws Will throw an error if the request fails.
  */
-export async function getMinPointGame(puntosJugados) {
+export async function getMinPointGame(puntosJugados) {  
   try {
     const resp = await axios.get(`/puntajes/puntajeMin/${puntosJugados}`);
 

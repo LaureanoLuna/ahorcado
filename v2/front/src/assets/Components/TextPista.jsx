@@ -9,7 +9,7 @@ export default function TextPista() {
 
   // Función para solicitar una pista
   const solicitarPista = async () => {
-    if (errorCount % 3 === 0) {
+    if (errorCount % 2 === 0 && errorCount !== 0) {
       const nuevaPista = await obtenerPistas(palabraJuego);
       setPista(nuevaPista); // Establece la nueva pista si hay un múltiplo de 3 errores
     }

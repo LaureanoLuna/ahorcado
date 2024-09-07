@@ -15,7 +15,7 @@ export default function GameOver() {
       if (!response) {
         navigate("/No tienes puntos");
       } else {
-        navigate("/point/true");
+        navigate(`/point/true/${countPalabrasJugadas.current}`);
       }
     } catch (error) {
       console.error("Error en la validación de puntos:", error);
@@ -27,7 +27,6 @@ export default function GameOver() {
     const timeoutId = setTimeout(validatePoints, 5000);
     return () => clearTimeout(timeoutId);
   }, []);
-
 
   const overlayStyle = {
     width: "100%",

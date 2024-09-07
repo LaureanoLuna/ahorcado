@@ -7,10 +7,14 @@ import { useNavigate } from "react-router-dom";
 import BoxCount from "../assets/Components/BoxCount";
 import TimerGame from "../assets/Components/TimerGame";
 import TextPista from "../assets/Components/TextPista";
+import Loading from "../assets/Components/Loading";
 
 export default function Game() {
   // Estado para la letra ingresada por el jugador
   const [inputLetter, setInputLetter] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Referencia al input del jugador
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -49,20 +53,21 @@ export default function Game() {
     resetWord();
   };
 
-  // Efecto para enfocar el input al cargar el componente y cada segundo
   useEffect(() => {
-    inputRef.current.focus();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      inputRef.current.focus();
+    }, 1000);
 
     const interval = setInterval(() => {
       inputRef.current.focus();
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, []);
-
-  // Efecto para reiniciar el juego al cargar el componente
-  useEffect(() => {
-  }, [palabraJuego]);
 
   // Estilos del contenedor principal del juego
   const gameContentStyle = {
@@ -75,38 +80,50 @@ export default function Game() {
 
   return (
     <>
-      {gameOver && <GameOver />}{" "}
-      {/* Muestra la pantalla de Game Over si el juego ha terminado */}
-      <div className="game-content">
-        <div style={gameContentStyle}>
-          <BoxCount num={countPalabrasJugadas.current} text={"Adivinadas"} />
-          <TimerGame />
-          <BoxCount num={errorCount} text={"Intentos"} />
-        </div>
-        <div className="representation-game">
-          <HorcaGame />
-        </div>
-        <TextPista />
-        <div id="word-to-guess">
-          {palabraToGuess.current.map((letter, index) => (
-            <Letra letter={letter} key={index} />
-          ))}
-        </div>
-        <div>
-          <input
-            autoComplete="off"
-            id="input-letter"
-            ref={inputRef}
-            value={inputLetter}
-            type="text"
-            onChange={setLetter}
-          />
-        </div>
-        <button onClick={handleChangeWord}>Reset</button>
-        <button style={{ background: "red" }} onClick={handleExit}>
-          Volver
-        </button>
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {
+            gameOver && (
+              <GameOver />
+            ) /* Muestra la pantalla de Game Over si el juego ha terminado */
+          }
+          <div className="game-content">
+            <div style={gameContentStyle}>
+              <BoxCount
+                num={countPalabrasJugadas.current}
+                text={"Adivinadas"}
+              />
+              <TimerGame />
+              <BoxCount num={errorCount} text={"Intentos"} />
+            </div>
+            <div className="representation-game">
+              <HorcaGame />
+            </div>
+            <TextPista />
+            <div id="word-to-guess">
+              {palabraToGuess.current.map((letter, index) => (
+                <Letra letter={letter} key={index} />
+              ))}
+            </div>
+            <div>
+              <input
+                autoComplete="off"
+                id="input-letter"
+                ref={inputRef}
+                value={inputLetter}
+                type="text"
+                onChange={setLetter}
+              />
+            </div>
+            <button onClick={handleChangeWord}>Reset</button>
+            <button style={{ background: "red" }} onClick={handleExit}>
+              Volver
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }
