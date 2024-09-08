@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:8001/",
+  baseURL: "https://ahorcado-back.onrender.com/",
   withCredentials: false,
 });
