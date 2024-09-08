@@ -6,16 +6,12 @@ import imgM from "../Img/HorcaMuerta.svg";
 export default function HorcaGame() {
   const { gameOver } = useGameContext();
 
-  const estilosImg = {};
-
-  const handleImg = () => {};
-
   return (
     <div>
       {gameOver ? (
-        <img style={{ maxWidth: "300px" }} src={imgM} />
+        <img className="imgGame" src={imgM} />
       ) : (
-        <img style={{ maxWidth: "300px" }} src={imgV} />
+        <img className="imgGame" src={imgV} />
       )}
     </div>
   );
