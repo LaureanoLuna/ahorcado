@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function useOpenIA() {
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyBUbNzL1QKwMy8h6P7NiOCAHRuU4RXv2j0"
+    "AIzaSyDpxLfvLDas0ivcA2-2tPoPuHBGSFd_qB8"
   );
 
   const obtenerPistas = async (palabra) => {
