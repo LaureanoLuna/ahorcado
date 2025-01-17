@@ -4,7 +4,7 @@ import { quitarAcento } from "./quitarAcento";
 /* Funcion con la cual obtenemos una palabra random para el juego */
 export async function fetchPalabraRandom() {
   /* variable contenedora de la url de la api */
-  const url = "https://clientes.api.greenborn.com.ar/public-random-word";
+  const url = "https://random-word-api.herokuapp.com/word?number=1&lang=es";
 
   try {
     /* REALIZAMOS EL FETCH HACIA LA URL */
