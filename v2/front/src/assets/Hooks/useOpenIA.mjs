@@ -14,7 +14,7 @@ function useOpenIA() {
         },
       });
 
-      const prompt = `Pista de esta palabra: ${palabra}, solo la pista`;
+      const prompt = `Imagina que estás en un juego de adivinanzas. Dame una pista creativa y sorprendente para la palabra "${palabra}" que despierte la curiosidad de los jugadores.`;
       const resultado = await modelo.generateContent(prompt);
 
       if (!resultado || !resultado.response) {
